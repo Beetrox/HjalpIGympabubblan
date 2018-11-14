@@ -23,6 +23,10 @@ public class DifficultyActivity extends AppCompatActivity {
     List<Skill> skills = new ArrayList<>();
     List<String> skillNames = new ArrayList<>();
 
+    double firstSkillDifficulty = 0;
+    double secondSkillDifficulty = 0;
+    double thirdSkillDifficulty = 0;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -33,14 +37,11 @@ public class DifficultyActivity extends AppCompatActivity {
         secondSkillSpinner = findViewById(R.id.secondSkillSpinner);
         thirdSkillSpinner = findViewById(R.id.thirdSkillSpinner);
 
+        secondSkillSpinner.setEnabled(false);
+        thirdSkillSpinner.setEnabled(false);
+
         PopulateSkills();
         PopulateSkillNames();
-
-//        skillNames =  new ArrayList<>();
-//        skillNames.add("Välj övning");
-//        skillNames.add(rondat.getName());
-//        skillNames.add(flickis.getName());
-//        skillNames.add(saltoGrupperad.getName());
 //
         ArrayAdapter<String> skillsAdapter = new ArrayAdapter<>(
                 this, android.R.layout.simple_spinner_item, skillNames);
@@ -50,42 +51,19 @@ public class DifficultyActivity extends AppCompatActivity {
         secondSkillSpinner.setAdapter(skillsAdapter);
         thirdSkillSpinner.setAdapter(skillsAdapter);
 
-//        List<String> skillArray =  new ArrayList<>();
-//        skillArray.add("0.0");
-//        skillArray.add("0.1");
-//        skillArray.add("0.2");
-//        skillArray.add("0.3");
-//
-//        ArrayAdapter<String> skillAdapter = new ArrayAdapter<>(
-//                this, android.R.layout.simple_spinner_item, skillArray);
-//
-//        skillAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
-//        firstSkillSpinner.setAdapter(skillAdapter);
-//        secondSkillSpinner.setAdapter(skillAdapter);
-//        thirdSkillSpinner.setAdapter(skillAdapter);
-
-//        List<Double> skillArray =  new ArrayList<Double>();
-//        skillArray.add(0.0);
-//        skillArray.add(0.1);
-//        skillArray.add(0.2);
-//        skillArray.add(0.3);
-//
-//        ArrayAdapter<Double> skillAdapter = new ArrayAdapter<Double>(
-//                this, android.R.layout.simple_spinner_item, skillArray);
-//
-//        skillAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
-//        firstSkillSpinner.setAdapter(skillAdapter);
-//        secondSkillSpinner.setAdapter(skillAdapter);
-//        thirdSkillSpinner.setAdapter(skillAdapter);
-
         firstSkillSpinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
 
             @Override
             public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
-
-                System.out.println("first item selected");
-                double result = DifficultyResult(position);
-                difficultyTextView.setText(String.valueOf(result));
+                firstSkillDifficulty = DifficultyResult(position);
+                ShowDifficulty();
+                if(position > 0) {
+                    secondSkillSpinner.setEnabled(true);
+                } else {
+                    secondSkillSpinner.setEnabled(false);
+                    secondSkillSpinner.setSelection(0);
+                    thirdSkillSpinner.setSelection(0);
+                }
             }
 
             @Override
@@ -98,10 +76,14 @@ public class DifficultyActivity extends AppCompatActivity {
 
             @Override
             public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
-
-                System.out.println("second item selected");
-                double result = DifficultyResult(position);
-                difficultyTextView.setText(String.valueOf(result));
+                secondSkillDifficulty = DifficultyResult(position);
+                ShowDifficulty();
+                if(position > 0) {
+                    thirdSkillSpinner.setEnabled(true);
+                } else {
+                    thirdSkillSpinner.setEnabled(false);
+                    thirdSkillSpinner.setSelection(0);
+                }
             }
 
             @Override
@@ -114,10 +96,8 @@ public class DifficultyActivity extends AppCompatActivity {
 
             @Override
             public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
-
-                System.out.println("third item selected");
-                double result = DifficultyResult(position);
-                difficultyTextView.setText(String.valueOf(result));
+                thirdSkillDifficulty = DifficultyResult(position);
+                ShowDifficulty();
             }
 
             @Override
@@ -128,7 +108,6 @@ public class DifficultyActivity extends AppCompatActivity {
     }
 
     public double DifficultyResult(int position) {
-
         double result;
         double difficulty = 0;
         String skillName = skillNames.get(position);
@@ -146,16 +125,45 @@ public class DifficultyActivity extends AppCompatActivity {
         return result;
     }
 
+    void ShowDifficulty() {
+        difficultyTextView.setText(String.valueOf(firstSkillDifficulty + secondSkillDifficulty + thirdSkillDifficulty));
+    }
+
     public void PopulateSkills() {
-        Skill noneSelected = new Skill("None selected", 0);
+        Skill noneSelected = new Skill("Välj övning", 0);
         Skill rondat = new Skill("Rondat", 0.1);
         Skill flickis = new Skill("Flickis", 0.15);
         Skill saltoGrupperad = new Skill("Salto grupperad", 0.2);
+        Skill saltoPik = new Skill("Salto pik", 0.25);
+        Skill saltoStrackt = new Skill("Salto sträckt", 0.3);
+        Skill saltoStrackt360 = new Skill("Salto sträckt 360", 0.4);
+        Skill saltoStrackt720 = new Skill("Salto sträckt 720", 0.5);
+        Skill handvolt = new Skill("Handvolt", 0.15);
+        Skill frivoltGrupperad = new Skill("Frivolt grupperad", 0.2);
+        Skill frivoltPik = new Skill("Frivolt pik", 0.25);
+        Skill frivoltStrackt = new Skill("Frivolt sträckt", 0.3);
+        Skill frivoltStrackt180 = new Skill("Frivolt sträckt 180", 0.35);
+        Skill frivoltStrackt360 = new Skill("Frivolt sträckt 360", 0.4);
+        Skill frivoltStrackt540 = new Skill("Frivolt sträckt 540", 0.45);
+        Skill frivoltStracktStart = new Skill("Frivolt sträckt start", 0.15);
 
         skills.add(noneSelected);
         skills.add(rondat);
         skills.add(flickis);
         skills.add(saltoGrupperad);
+        skills.add(saltoPik);
+        skills.add(saltoStrackt);
+        skills.add(saltoStrackt360);
+        skills.add(saltoStrackt720);
+        skills.add(handvolt);
+        skills.add(frivoltGrupperad);
+        skills.add(frivoltPik);
+        skills.add(frivoltStrackt);
+        skills.add(frivoltStrackt180);
+        skills.add(frivoltStrackt360);
+        skills.add(frivoltStrackt540);
+        skills.add(frivoltStracktStart);
+
     }
 
     public void PopulateSkillNames() {
