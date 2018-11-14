@@ -5,6 +5,7 @@ import android.os.Bundle;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
+import android.widget.Button;
 import android.widget.Spinner;
 import android.widget.TextView;
 
@@ -19,6 +20,7 @@ public class DifficultyActivity extends AppCompatActivity {
     Spinner firstSkillSpinner;
     Spinner secondSkillSpinner;
     Spinner thirdSkillSpinner;
+    Button resetButton;
 
     List<Skill> skills = new ArrayList<>();
     List<String> skillNames = new ArrayList<>();
@@ -36,9 +38,18 @@ public class DifficultyActivity extends AppCompatActivity {
         firstSkillSpinner = findViewById(R.id.firstSkillSpinner);
         secondSkillSpinner = findViewById(R.id.secondSkillSpinner);
         thirdSkillSpinner = findViewById(R.id.thirdSkillSpinner);
+        resetButton = findViewById(R.id.resetSkillsButton);
 
         secondSkillSpinner.setEnabled(false);
         thirdSkillSpinner.setEnabled(false);
+
+        resetButton.setOnClickListener(new View.OnClickListener() {
+            public void onClick(View v) {
+                firstSkillSpinner.setSelection(0);
+                secondSkillSpinner.setSelection(0);
+                thirdSkillSpinner.setSelection(0);
+            }
+        });
 
         PopulateSkills();
         PopulateSkillNames();
@@ -130,7 +141,7 @@ public class DifficultyActivity extends AppCompatActivity {
     }
 
     public void PopulateSkills() {
-        Skill noneSelected = new Skill("Välj övning", 0);
+        Skill noneSelected = new Skill(getResources().getString(R.string.pickSkill), 0);
         Skill rondat = new Skill("Rondat", 0.1);
         Skill flickis = new Skill("Flickis", 0.15);
         Skill saltoGrupperad = new Skill("Salto grupperad", 0.2);
