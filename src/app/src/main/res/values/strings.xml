@@ -1,6 +1,10 @@
 <resources>
     <string name="app_name">Hjälp i Gympabubblan</string>
     <string name="app_name_short">HiG</string>
+    
+    <string name="menu_drills">Drills</string>
+    <string name="menu_strength">Strength</string>
+    <string name="menu_difficulty">Difficulty</string>
 
     <string name="choose_skill">Choose skill</string>
     <string name="difficultyText">Difficulty value</string>

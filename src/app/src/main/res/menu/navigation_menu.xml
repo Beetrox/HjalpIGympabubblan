@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <item android:title="@string/menu_drills"
+        android:id="@+id/menuDrills"
+        android:icon="@mipmap/hig_icon" />
+
+    <item android:title="@string/menu_strength"
+        android:id="@+id/menuStrength"
+        android:icon="@mipmap/hig_icon" />
+
+    <item android:title="@string/menu_difficulty"
+        android:id="@+id/menuDifficulty"
+        android:icon="@mipmap/hig_icon" />
+
+</menu>

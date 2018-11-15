@@ -119,7 +119,6 @@ public class DifficultyActivity extends AppCompatActivity {
     }
 
     public double DifficultyResult(int position) {
-        double result;
         double difficulty = 0;
         String skillName = skillNames.get(position);
 
@@ -129,11 +128,7 @@ public class DifficultyActivity extends AppCompatActivity {
                 difficulty = skill.getDifficulty();
             }
         }
-        result = difficulty;
-                // if no skill use 0.0
-//        result = Double.valueOf(firstSkillSpinner.getSelectedItem().toString()) + Double.valueOf(secondSkillSpinner.getSelectedItem().toString()) + Double.valueOf(thirdSkillSpinner.getSelectedItem().toString());
-//        result = firstSkillSpinner.getSelectedItem();
-        return result;
+        return difficulty;
     }
 
     void ShowDifficulty() {
