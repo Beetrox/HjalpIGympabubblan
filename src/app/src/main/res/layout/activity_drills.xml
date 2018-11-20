@@ -1,0 +1,57 @@
+<?xml version="1.0" encoding="utf-8"?>
+<android.support.constraint.ConstraintLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <TextView
+        android:id="@+id/descriptionTextView"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="8dp"
+        android:layout_marginTop="8dp"
+        android:layout_marginEnd="8dp"
+        android:layout_marginBottom="8dp"
+        android:text="Instantly break out into full speed gallop across the house for no reason meow all night, why must they do that ccccccccccccaaaaaaaaaaaaaaatttttttttttttttttssssssssssssssss ptracy, or chew on cable. This cat happen now, it was too purr-fect!!! stare at the wall, play with food and get confused by dust but groom forever, stretch tongue and leave it slightly out, blep. I could pee on this if i had the energy. Pushes butt to face push your water glass on the floor yet burrow under covers attack like a vicious monster i show my fluffy belly but it's a trap! if you pet it i will tear up your hand snuggles up to shoulders or knees and purrs you to sleep. Push your water glass on the floor i heard this rumor where the humans are our owners, pfft, what do they know?! so proudly present butt to human see owner, run in terror and touch my tail, i shred your hand purrrr cough furball into food bowl then scratch owner for a new one, or get suspicious of own shadow then go play with toilette paper. Flee in terror at cucumber discovered on floor always ensure to lay down in such a manner that tail can lightly brush human's nose hide at bottom of staircase to trip human or sit by the fire, eat plants, meow, and throw up because i ate plants."
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/drillImageView" />
+
+    <TextView
+        android:id="@+id/titleTextView"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="8dp"
+        android:layout_marginTop="8dp"
+        android:layout_marginEnd="8dp"
+        android:text="Drill name"
+        android:textSize="36dp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <ImageView
+        android:id="@+id/drillImageView"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="8dp"
+        android:layout_marginTop="8dp"
+        android:layout_marginEnd="8dp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/titleTextView"
+        app:srcCompat="@mipmap/hig_icon" />
+
+    <android.support.design.widget.BottomNavigationView
+        android:id="@+id/navigation_view"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintRight_toRightOf="parent"
+        app:menu="@menu/navigation_menu"/>
+
+</android.support.constraint.ConstraintLayout>
