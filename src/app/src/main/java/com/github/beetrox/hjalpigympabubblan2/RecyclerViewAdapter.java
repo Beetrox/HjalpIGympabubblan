@@ -43,8 +43,8 @@ public class RecyclerViewAdapter extends RecyclerView.Adapter<RecyclerViewAdapte
 
                 Intent intent = new Intent(context, DrillsActivity.class);
 
-                intent.putExtra("Title", drills.get(position).getName());
-                intent.putExtra("Description", drills.get(position).getDescription());
+                intent.putExtra("drillName", drills.get(position).getName());
+                intent.putExtra("drillDescription", drills.get(position).getDescription());
 //                intent.putExtra("Thumbnail",drills.get(position).getImage());
                 // start the activity
                 context.startActivity(intent);
