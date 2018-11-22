@@ -1,0 +1,55 @@
+{
+  "project_info": {
+    "project_number": "538400478851",
+    "firebase_url": "https://hjalp-i-gympabubblan.firebaseio.com",
+    "project_id": "hjalp-i-gympabubblan",
+    "storage_bucket": "hjalp-i-gympabubblan.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:538400478851:android:bf435de50ca905b1",
+        "android_client_info": {
+          "package_name": "com.github.beetrox.hjalpigympabubblan2"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "538400478851-55j3eona1tnp0psg0drg2k7anv8k8v55.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.github.beetrox.hjalpigympabubblan2",
+            "certificate_hash": "c63de5b361242934baf0e73ae0fce90cac739d1e"
+          }
+        },
+        {
+          "client_id": "538400478851-4c5j0vjtrqg93sugcn2mrts3vuh7rdnn.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyCSWiOzNVbmcEP5phLjNYRGHgcViMhrjuE"
+        }
+      ],
+      "services": {
+        "analytics_service": {
+          "status": 1
+        },
+        "appinvite_service": {
+          "status": 2,
+          "other_platform_oauth_client": [
+            {
+              "client_id": "538400478851-4c5j0vjtrqg93sugcn2mrts3vuh7rdnn.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        },
+        "ads_service": {
+          "status": 2
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

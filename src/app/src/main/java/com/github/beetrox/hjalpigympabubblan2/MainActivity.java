@@ -1,5 +1,6 @@
 package com.github.beetrox.hjalpigympabubblan2;
 
+import android.content.Intent;
 import android.support.annotation.NonNull;
 import android.support.design.internal.BottomNavigationMenu;
 import android.support.design.internal.BottomNavigationMenuView;
@@ -18,16 +19,19 @@ import java.util.List;
 public class MainActivity extends AppCompatActivity {
 
     public List<Drill> drills = new ArrayList<>();
-//    MenuItem menuDifficulty = findViewById(R.id.menuDifficulty);
     private ActionBar toolbar;
+    Intent intent;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_drills_grid);
 
-        BottomNavigationMenuView navigationMenu = findViewById(R.id.navigation_view);
+//        BottomNavigationMenuView navigationMenu = findViewById(R.id.navigation_view);
         toolbar = getSupportActionBar();
+
+        BottomNavigationView navigation = (BottomNavigationView) findViewById(R.id.navigation_view);
+        navigation.setOnNavigationItemSelectedListener(mOnNavigationItemSelectedListener);
 
         CreateMockDrills();
 
@@ -46,13 +50,16 @@ public class MainActivity extends AppCompatActivity {
             switch (item.getItemId()) {
                 case R.id.menuDrills:
                     toolbar.setTitle("Drills");
-                    System.out.println("Drills");
+                    intent = new Intent(getApplicationContext(), MainActivity.class);
+                    startActivity(intent);
                     return true;
                 case R.id.menuStrength:
                     toolbar.setTitle("Strength");
                     return true;
                 case R.id.menuDifficulty:
                     toolbar.setTitle("Difficulty");
+                    intent = new Intent(getApplicationContext(), DifficultyActivity.class);
+                    startActivity(intent);
                     return true;
             }
             return false;

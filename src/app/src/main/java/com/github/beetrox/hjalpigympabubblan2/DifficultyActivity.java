@@ -1,7 +1,12 @@
 package com.github.beetrox.hjalpigympabubblan2;
 
+import android.content.Intent;
+import android.support.annotation.NonNull;
+import android.support.design.widget.BottomNavigationView;
+import android.support.v7.app.ActionBar;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.view.MenuItem;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
@@ -24,6 +29,7 @@ public class DifficultyActivity extends AppCompatActivity {
 
     List<Skill> skills = new ArrayList<>();
     List<String> skillNames = new ArrayList<>();
+    Intent intent;
 
     double firstSkillDifficulty = 0;
     double secondSkillDifficulty = 0;
@@ -50,6 +56,9 @@ public class DifficultyActivity extends AppCompatActivity {
                 thirdSkillSpinner.setSelection(0);
             }
         });
+
+        BottomNavigationView navigation = (BottomNavigationView) findViewById(R.id.navigation_view);
+        navigation.setOnNavigationItemSelectedListener(mOnNavigationItemSelectedListener);
 
         PopulateSkills();
         PopulateSkillNames();
@@ -130,6 +139,28 @@ public class DifficultyActivity extends AppCompatActivity {
         }
         return difficulty;
     }
+
+    private BottomNavigationView.OnNavigationItemSelectedListener mOnNavigationItemSelectedListener
+            = new BottomNavigationView.OnNavigationItemSelectedListener() {
+
+        @Override
+        public boolean onNavigationItemSelected(@NonNull MenuItem item) {
+//            Fragment fragment;
+            switch (item.getItemId()) {
+                case R.id.menuDrills:
+                    intent = new Intent(getApplicationContext(), MainActivity.class);
+                    startActivity(intent);
+                    return true;
+                case R.id.menuStrength:
+                    return true;
+                case R.id.menuDifficulty:
+                    intent = new Intent(getApplicationContext(), DifficultyActivity.class);
+                    startActivity(intent);
+                    return true;
+            }
+            return false;
+        }
+    };
 
     void ShowDifficulty() {
         difficultyTextView.setText(String.valueOf(firstSkillDifficulty + secondSkillDifficulty + thirdSkillDifficulty));
