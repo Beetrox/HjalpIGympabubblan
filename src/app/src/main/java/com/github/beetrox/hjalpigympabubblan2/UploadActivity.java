@@ -17,12 +17,16 @@ import android.widget.Toast;
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.android.gms.tasks.Task;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.storage.FirebaseStorage;
 import com.google.firebase.storage.OnProgressListener;
 import com.google.firebase.storage.StorageReference;
 import com.google.firebase.storage.UploadTask;
 
 import java.io.IOException;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.UUID;
 
 public class UploadActivity extends AppCompatActivity {
@@ -38,6 +42,7 @@ public class UploadActivity extends AppCompatActivity {
 
     FirebaseStorage storage;
     StorageReference storageReference;
+    DatabaseReference databaseReference;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -51,6 +56,7 @@ public class UploadActivity extends AppCompatActivity {
         drillDescription = findViewById(R.id.editTextDescription);
         storage = FirebaseStorage.getInstance();
         storageReference = storage.getReference();
+        databaseReference = FirebaseDatabase.getInstance().getReference().child("drills");
 
         btnSelect.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -75,7 +81,9 @@ public class UploadActivity extends AppCompatActivity {
     }
 
     private void CreateDrill(String imageUri) {
-
+        Drill drill = new Drill(drillName.getText().toString(), imageUri, drillDescription.getText().toString(), new ArrayList<String>());
+        String id = UUID.randomUUID().toString();
+        databaseReference.child(id).setValue(drill);
     }
 
     private void UploadImage() {

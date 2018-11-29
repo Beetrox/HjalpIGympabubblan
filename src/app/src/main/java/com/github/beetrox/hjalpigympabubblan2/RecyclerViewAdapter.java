@@ -15,10 +15,10 @@ import java.util.List;
 public class RecyclerViewAdapter extends RecyclerView.Adapter<RecyclerViewAdapter.MyViewHolder> {
 
     private Context context;
-    private List<Drill> drills;
+    private List<DifficultyDrill> drills;
 
 
-    public RecyclerViewAdapter(Context context, List<Drill> drills) {
+    public RecyclerViewAdapter(Context context, List<DifficultyDrill> drills) {
         this.context = context;
         this.drills = drills;
     }

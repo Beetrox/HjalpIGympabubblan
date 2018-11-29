@@ -1,15 +1,18 @@
 package com.github.beetrox.hjalpigympabubblan2;
 
+import java.util.List;
+
 public class Drill {
+    String name;
+    String imageUrl;
+    String description;
+    List<String> tags;
 
-    public String name;
-    private String category;
-    private String description;
-
-    public Drill(String name, String category, String description) {
+    public Drill(String name, String imageUrl, String description, List<String> tags) {
         this.name = name;
-        this.category = category;
+        this.imageUrl = imageUrl;
         this.description = description;
+        this.tags = tags;
     }
 
     public String getName() {
@@ -20,12 +23,12 @@ public class Drill {
         this.name = name;
     }
 
-    public String getCategory() {
-        return category;
+    public String getImageUrl() {
+        return imageUrl;
     }
 
-    public void setCategory(String category) {
-        this.category = category;
+    public void setImageUrl(String imageUrl) {
+        this.imageUrl = imageUrl;
     }
 
     public String getDescription() {
@@ -34,5 +37,13 @@ public class Drill {
 
     public void setDescription(String description) {
         this.description = description;
+    }
+
+    public List<String> getTags() {
+        return tags;
+    }
+
+    public void setTags(List<String> tags) {
+        this.tags = tags;
     }
 }
