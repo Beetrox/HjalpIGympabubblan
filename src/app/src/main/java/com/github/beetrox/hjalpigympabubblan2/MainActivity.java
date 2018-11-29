@@ -61,6 +61,11 @@ public class MainActivity extends AppCompatActivity {
                     intent = new Intent(getApplicationContext(), DifficultyActivity.class);
                     startActivity(intent);
                     return true;
+                case R.id.menuUpload:
+                    toolbar.setTitle("Upload");
+                    intent = new Intent(getApplicationContext(), UploadActivity.class);
+                    startActivity(intent);
+                    return true;
             }
             return false;
         }

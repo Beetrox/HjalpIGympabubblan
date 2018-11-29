@@ -157,6 +157,10 @@ public class DifficultyActivity extends AppCompatActivity {
                     intent = new Intent(getApplicationContext(), DifficultyActivity.class);
                     startActivity(intent);
                     return true;
+                case R.id.menuUpload:
+                    intent = new Intent(getApplicationContext(), UploadActivity.class);
+                    startActivity(intent);
+                    return true;
             }
             return false;
         }
