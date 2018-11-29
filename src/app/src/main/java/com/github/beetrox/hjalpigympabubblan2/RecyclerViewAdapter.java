@@ -10,17 +10,22 @@ import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import com.google.firebase.storage.FirebaseStorage;
+import com.google.firebase.storage.StorageReference;
+
 import java.util.List;
 
 public class RecyclerViewAdapter extends RecyclerView.Adapter<RecyclerViewAdapter.MyViewHolder> {
 
     private Context context;
-    private List<DifficultyDrill> drills;
+    private List<Drill> drills;
+    StorageReference storageReference;
 
 
-    public RecyclerViewAdapter(Context context, List<DifficultyDrill> drills) {
+    public RecyclerViewAdapter(Context context, List<Drill> drills) {
         this.context = context;
         this.drills = drills;
+        storageReference = FirebaseStorage.getInstance().getReference();
     }
 
     @Override
@@ -34,8 +39,9 @@ public class RecyclerViewAdapter extends RecyclerView.Adapter<RecyclerViewAdapte
 
     @Override
     public void onBindViewHolder(MyViewHolder holder, final int position) {
+        final Drill drill = drills.get(position);
 
-        holder.drillName.setText(drills.get(position).getName());
+        holder.drillName.setText(drill.getName());
 //        holder.drillThumbnail.setImageResource(drills.get(position).getImage());
         holder.cardView.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -43,8 +49,8 @@ public class RecyclerViewAdapter extends RecyclerView.Adapter<RecyclerViewAdapte
 
                 Intent intent = new Intent(context, DrillsActivity.class);
 
-                intent.putExtra("drillName", drills.get(position).getName());
-                intent.putExtra("drillDescription", drills.get(position).getDescription());
+                intent.putExtra("drillName", drill.getName());
+                intent.putExtra("drillDescription", drill.getDescription());
 //                intent.putExtra("Thumbnail",drills.get(position).getImage());
                 // start the activity
                 context.startActivity(intent);

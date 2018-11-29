@@ -2,15 +2,18 @@ package com.github.beetrox.hjalpigympabubblan2;
 
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.widget.ImageView;
 import android.widget.TextView;
 
 public class DrillsActivity extends AppCompatActivity {
 
     String drillName;
     String drillDescription;
+    String imageUrl;
 
     TextView drillNameTextView;
     TextView drillDescriptionTextView;
+    ImageView drillImageView;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -31,5 +34,7 @@ public class DrillsActivity extends AppCompatActivity {
 
         drillNameTextView.setText(drillName);
         drillDescriptionTextView.setText(drillDescription);
+
+
     }
 }

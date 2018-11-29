@@ -8,6 +8,10 @@ public class Drill {
     String description;
     List<String> tags;
 
+    public Drill() {
+
+    }
+
     public Drill(String name, String imageUrl, String description, List<String> tags) {
         this.name = name;
         this.imageUrl = imageUrl;
