@@ -6,6 +6,7 @@ import android.support.design.widget.BottomNavigationView;
 import android.support.v7.app.ActionBar;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.AdapterView;
@@ -59,6 +60,10 @@ public class DifficultyActivity extends AppCompatActivity {
 
         BottomNavigationView navigation = (BottomNavigationView) findViewById(R.id.navigation_view);
         navigation.setOnNavigationItemSelectedListener(mOnNavigationItemSelectedListener);
+
+        Menu menu = navigation.getMenu();
+        MenuItem menuItem = menu.getItem(2);
+        menuItem.setChecked(true);
 
         PopulateSkills();
         PopulateSkillNames();
@@ -154,8 +159,8 @@ public class DifficultyActivity extends AppCompatActivity {
                 case R.id.menuStrength:
                     return true;
                 case R.id.menuDifficulty:
-                    intent = new Intent(getApplicationContext(), DifficultyActivity.class);
-                    startActivity(intent);
+//                    intent = new Intent(getApplicationContext(), DifficultyActivity.class);
+//                    startActivity(intent);
                     return true;
                 case R.id.menuUpload:
                     intent = new Intent(getApplicationContext(), UploadActivity.class);

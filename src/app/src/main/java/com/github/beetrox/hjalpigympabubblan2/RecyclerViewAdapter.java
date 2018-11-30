@@ -10,6 +10,7 @@ import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import com.bumptech.glide.Glide;
 import com.google.firebase.storage.FirebaseStorage;
 import com.google.firebase.storage.StorageReference;
 
@@ -19,7 +20,7 @@ public class RecyclerViewAdapter extends RecyclerView.Adapter<RecyclerViewAdapte
 
     private Context context;
     private List<Drill> drills;
-    StorageReference storageReference;
+    private StorageReference storageReference;
 
 
     public RecyclerViewAdapter(Context context, List<Drill> drills) {
@@ -41,7 +42,9 @@ public class RecyclerViewAdapter extends RecyclerView.Adapter<RecyclerViewAdapte
     public void onBindViewHolder(MyViewHolder holder, final int position) {
         final Drill drill = drills.get(position);
 
+        Context imageContext = holder.drillThumbnail.getContext();
         holder.drillName.setText(drill.getName());
+        Glide.with(imageContext).load(drill.getImageUrl()).into(holder.drillThumbnail);
 //        holder.drillThumbnail.setImageResource(drills.get(position).getImage());
         holder.cardView.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -51,6 +54,7 @@ public class RecyclerViewAdapter extends RecyclerView.Adapter<RecyclerViewAdapte
 
                 intent.putExtra("drillName", drill.getName());
                 intent.putExtra("drillDescription", drill.getDescription());
+                intent.putExtra("imageUrl", drill.getImageUrl());
 //                intent.putExtra("Thumbnail",drills.get(position).getImage());
                 // start the activity
                 context.startActivity(intent);

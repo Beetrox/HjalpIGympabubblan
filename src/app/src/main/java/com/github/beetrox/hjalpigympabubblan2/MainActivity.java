@@ -9,6 +9,7 @@ import android.os.Bundle;
 import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.util.Log;
+import android.view.Menu;
 import android.view.MenuItem;
 
 import com.google.firebase.database.DataSnapshot;
@@ -40,6 +41,10 @@ public class MainActivity extends AppCompatActivity {
         BottomNavigationView navigation = (BottomNavigationView) findViewById(R.id.navigation_view);
         navigation.setOnNavigationItemSelectedListener(mOnNavigationItemSelectedListener);
 
+        Menu menu = navigation.getMenu();
+        MenuItem menuItem = menu.getItem(0);
+        menuItem.setChecked(true);
+
 //        CreateMockDrills();
 
         RecyclerView recyclerView = (RecyclerView) findViewById(R.id.recyclerview);
@@ -62,13 +67,9 @@ public class MainActivity extends AppCompatActivity {
 
                 drills.clear();
 
-                //packingLists = new ArrayList<PackingList>();
                 for (DataSnapshot dataSnapshot1 : dataSnapshot.getChildren()) {
 
                     Drill drill = dataSnapshot1.getValue(Drill.class);
-                    //PackingList packingList = new PackingList();
-                    //String name1 = value.getName();
-                    //packingList.setName(name1);
                     drills.add(drill);
                 }
                 myAdapter.notifyDataSetChanged();
@@ -90,8 +91,8 @@ public class MainActivity extends AppCompatActivity {
             switch (item.getItemId()) {
                 case R.id.menuDrills:
                     toolbar.setTitle("Drills");
-                    intent = new Intent(getApplicationContext(), MainActivity.class);
-                    startActivity(intent);
+//                    intent = new Intent(getApplicationContext(), MainActivity.class);
+//                    startActivity(intent);
                     return true;
                 case R.id.menuStrength:
                     toolbar.setTitle("Strength");

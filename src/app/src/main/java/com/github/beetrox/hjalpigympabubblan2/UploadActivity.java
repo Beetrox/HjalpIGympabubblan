@@ -6,8 +6,11 @@ import android.graphics.Bitmap;
 import android.net.Uri;
 import android.provider.MediaStore;
 import android.support.annotation.NonNull;
+import android.support.design.widget.BottomNavigationView;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.view.Menu;
+import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
@@ -35,6 +38,7 @@ public class UploadActivity extends AppCompatActivity {
     private ImageView imageView;
     private EditText drillName;
     private EditText drillDescription;
+    Intent intent;
 
     private Uri filePath;
 
@@ -57,6 +61,13 @@ public class UploadActivity extends AppCompatActivity {
         storage = FirebaseStorage.getInstance();
         storageReference = storage.getReference();
         databaseReference = FirebaseDatabase.getInstance().getReference().child("drills");
+
+        BottomNavigationView navigation = (BottomNavigationView) findViewById(R.id.navigation_view);
+        navigation.setOnNavigationItemSelectedListener(mOnNavigationItemSelectedListener);
+
+        Menu menu = navigation.getMenu();
+        MenuItem menuItem = menu.getItem(3);
+        menuItem.setChecked(true);
 
         btnSelect.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -93,7 +104,7 @@ public class UploadActivity extends AppCompatActivity {
             progressDialog.setTitle("Uploading...");
             progressDialog.show();
             final String fileName = UUID.randomUUID().toString();
-            System.out.println(fileName);
+//            System.out.println(fileName);
 
             final StorageReference ref = storageReference.child("images/" + fileName);
             ref.putFile(filePath)
@@ -106,7 +117,7 @@ public class UploadActivity extends AppCompatActivity {
                             ref.getDownloadUrl().addOnSuccessListener(new OnSuccessListener<Uri>() {
                                 @Override
                                 public void onSuccess(Uri uri) {
-                                    System.out.println("URL " + uri.toString());
+//                                    System.out.println("URL " + uri.toString());
                                     CreateDrill(uri.toString());
                                 }
                             });
@@ -147,4 +158,29 @@ public class UploadActivity extends AppCompatActivity {
             }
         }
     }
+
+    private BottomNavigationView.OnNavigationItemSelectedListener mOnNavigationItemSelectedListener
+            = new BottomNavigationView.OnNavigationItemSelectedListener() {
+
+        @Override
+        public boolean onNavigationItemSelected(@NonNull MenuItem item) {
+//            Fragment fragment;
+            switch (item.getItemId()) {
+                case R.id.menuDrills:
+                    intent = new Intent(getApplicationContext(), MainActivity.class);
+                    startActivity(intent);
+                    return true;
+                case R.id.menuStrength:
+                    return true;
+                case R.id.menuDifficulty:
+                    intent = new Intent(getApplicationContext(), DifficultyActivity.class);
+                    startActivity(intent);
+                    return true;
+                case R.id.menuUpload:
+
+                    return true;
+            }
+            return false;
+        }
+    };
 }

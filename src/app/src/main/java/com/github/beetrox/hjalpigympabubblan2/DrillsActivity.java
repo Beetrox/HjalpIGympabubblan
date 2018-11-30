@@ -5,6 +5,8 @@ import android.os.Bundle;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import com.bumptech.glide.Glide;
+
 public class DrillsActivity extends AppCompatActivity {
 
     String drillName;
@@ -26,6 +28,8 @@ public class DrillsActivity extends AppCompatActivity {
             //get the value based on the key
             drillName = extras.getString("drillName");
             drillDescription = extras.getString("drillDescription");
+            imageUrl = extras.get("imageUrl").toString();
+            System.out.println("Glide " + imageUrl);
 //            Log.d(TAG, value);
         }
 
@@ -34,6 +38,9 @@ public class DrillsActivity extends AppCompatActivity {
 
         drillNameTextView.setText(drillName);
         drillDescriptionTextView.setText(drillDescription);
+
+        drillImageView = findViewById(R.id.drillImageView);
+        Glide.with(getApplicationContext()).load(imageUrl).into(drillImageView);
 
 
     }
