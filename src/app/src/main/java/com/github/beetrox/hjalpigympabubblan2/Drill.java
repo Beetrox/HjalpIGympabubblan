@@ -6,17 +6,19 @@ public class Drill {
     String name;
     String imageUrl;
     String description;
+    String category;
     List<String> tags;
 
     public Drill() {
 
     }
 
-    public Drill(String name, String imageUrl, String description, List<String> tags) {
+    public Drill(String name, String imageUrl, String description, List<String> tags, String category) {
         this.name = name;
         this.imageUrl = imageUrl;
         this.description = description;
         this.tags = tags;
+        this.category = category;
     }
 
     public String getName() {
@@ -49,5 +51,13 @@ public class Drill {
 
     public void setTags(List<String> tags) {
         this.tags = tags;
+    }
+
+    public String getCategory() {
+        return category;
+    }
+
+    public void setCategory(String category) {
+        this.category = category;
     }
 }

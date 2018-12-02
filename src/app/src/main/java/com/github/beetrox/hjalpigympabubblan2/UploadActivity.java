@@ -9,14 +9,18 @@ import android.support.annotation.NonNull;
 import android.support.design.widget.BottomNavigationView;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.text.TextUtils;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
+import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageView;
+import android.widget.Spinner;
 import android.widget.Toast;
 
+import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.android.gms.tasks.Task;
@@ -29,6 +33,7 @@ import com.google.firebase.storage.UploadTask;
 
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 import java.util.UUID;
 
@@ -38,6 +43,9 @@ public class UploadActivity extends AppCompatActivity {
     private ImageView imageView;
     private EditText drillName;
     private EditText drillDescription;
+    private EditText drillTags;
+    ArrayList<String> categories;
+    Spinner categorySpinner;
     Intent intent;
 
     private Uri filePath;
@@ -46,7 +54,9 @@ public class UploadActivity extends AppCompatActivity {
 
     FirebaseStorage storage;
     StorageReference storageReference;
-    DatabaseReference databaseReference;
+    FirebaseDatabase firebaseDatabase;
+    DatabaseReference drillReference;
+    DatabaseReference tagReference;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -58,9 +68,13 @@ public class UploadActivity extends AppCompatActivity {
         imageView = (ImageView) findViewById(R.id.imgViewUpload);
         drillName = findViewById(R.id.editTextName);
         drillDescription = findViewById(R.id.editTextDescription);
+        drillTags = findViewById(R.id.editTextTags);
+        categorySpinner = findViewById(R.id.categorySpinner);
         storage = FirebaseStorage.getInstance();
         storageReference = storage.getReference();
-        databaseReference = FirebaseDatabase.getInstance().getReference().child("drills");
+        firebaseDatabase = FirebaseDatabase.getInstance();
+        drillReference = firebaseDatabase.getReference().child("drills");
+        tagReference = firebaseDatabase.getReference().child("tags");
 
         BottomNavigationView navigation = (BottomNavigationView) findViewById(R.id.navigation_view);
         navigation.setOnNavigationItemSelectedListener(mOnNavigationItemSelectedListener);
@@ -68,6 +82,15 @@ public class UploadActivity extends AppCompatActivity {
         Menu menu = navigation.getMenu();
         MenuItem menuItem = menu.getItem(3);
         menuItem.setChecked(true);
+
+        categories = new ArrayList<>();
+        PopulateCategories();
+
+        ArrayAdapter<String> categoriesAdapter = new ArrayAdapter<>(
+                this, android.R.layout.simple_spinner_item, categories);
+//
+        categoriesAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+        categorySpinner.setAdapter(categoriesAdapter);
 
         btnSelect.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -84,6 +107,12 @@ public class UploadActivity extends AppCompatActivity {
         });
     }
 
+    private void PopulateCategories() {
+        categories.add("Select category");
+        categories.add("Skill");
+        categories.add("Strength");
+    }
+
     private void SelectImage() {
         Intent intent = new Intent();
         intent.setType("image/*");
@@ -92,9 +121,46 @@ public class UploadActivity extends AppCompatActivity {
     }
 
     private void CreateDrill(String imageUri) {
-        Drill drill = new Drill(drillName.getText().toString(), imageUri, drillDescription.getText().toString(), new ArrayList<String>());
-        String id = UUID.randomUUID().toString();
-        databaseReference.child(id).setValue(drill);
+        String tagString = drillTags.getText().toString();
+        List<String> tags = Arrays.asList(TextUtils.split(tagString, ","));
+
+        for(int i=0;i<tags.size();i++) {
+            String tag = tags.get(i).trim();
+            tags.set(i, tag);
+        }
+
+        final Drill drill = new Drill(drillName.getText().toString(), imageUri, drillDescription.getText().toString(), tags, categorySpinner.getSelectedItem().toString());
+        final String id = UUID.randomUUID().toString();
+
+        drillReference.child(drill.category).child(id).setValue(drill).addOnCompleteListener(new OnCompleteListener<Void>() {
+            @Override
+            public void onComplete(@NonNull Task<Void> task) {
+                CreateTags(drill.getCategory(), drill.getTags(), id);
+                // might destroy activity before CreateTags is completed
+                intent = new Intent(getApplicationContext(), MainActivity.class);
+                startActivity(intent);
+            }
+        });
+    }
+
+    private void CreateTags(String category, List<String> tags, String id) {
+
+        for(int i=0;i<tags.size();i++) {
+            String tag = tags.get(i);
+            tagReference.child(category).child(tag).child(id).setValue(true);
+        }
+
+        return;
+    }
+
+    public static String strJoin(String[] aArr, String sSep) {
+        StringBuilder sbStr = new StringBuilder();
+        for (int i = 0, il = aArr.length; i < il; i++) {
+            if (i > 0)
+                sbStr.append(sSep);
+            sbStr.append(aArr[i]);
+        }
+        return sbStr.toString();
     }
 
     private void UploadImage() {

@@ -36,7 +36,7 @@ public class MainActivity extends AppCompatActivity {
 
 //        BottomNavigationMenuView navigationMenu = findViewById(R.id.navigation_view);
         toolbar = getSupportActionBar();
-        databaseReference = FirebaseDatabase.getInstance().getReference().child("drills");
+        databaseReference = FirebaseDatabase.getInstance().getReference().child("drills").child("Skill");
 
         BottomNavigationView navigation = (BottomNavigationView) findViewById(R.id.navigation_view);
         navigation.setOnNavigationItemSelectedListener(mOnNavigationItemSelectedListener);
@@ -87,7 +87,7 @@ public class MainActivity extends AppCompatActivity {
 
         @Override
         public boolean onNavigationItemSelected(@NonNull MenuItem item) {
-//            Fragment fragment;
+
             switch (item.getItemId()) {
                 case R.id.menuDrills:
                     toolbar.setTitle("Drills");

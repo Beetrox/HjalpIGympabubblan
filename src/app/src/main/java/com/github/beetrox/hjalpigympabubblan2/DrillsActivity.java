@@ -41,7 +41,5 @@ public class DrillsActivity extends AppCompatActivity {
 
         drillImageView = findViewById(R.id.drillImageView);
         Glide.with(getApplicationContext()).load(imageUrl).into(drillImageView);
-
-
     }
 }
