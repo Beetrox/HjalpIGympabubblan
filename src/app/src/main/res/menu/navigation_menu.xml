@@ -3,18 +3,18 @@
 
     <item android:title="@string/menu_drills"
         android:id="@+id/menuDrills"
-        android:icon="@mipmap/hig_icon" />
+        android:icon="@drawable/menu_drills" />
 
     <item android:title="@string/menu_strength"
         android:id="@+id/menuStrength"
-        android:icon="@mipmap/hig_icon" />
+        android:icon="@drawable/menu_strength" />
 
     <item android:title="@string/menu_difficulty"
         android:id="@+id/menuDifficulty"
-        android:icon="@mipmap/hig_icon" />
+        android:icon="@drawable/menu_difficulty" />
 
     <item android:title="@string/menu_upload"
         android:id="@+id/menuUpload"
-        android:icon="@mipmap/hig_icon" />
+        android:icon="@drawable/menu_upload" />
 
 </menu>
