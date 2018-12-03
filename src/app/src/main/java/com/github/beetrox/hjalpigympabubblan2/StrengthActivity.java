@@ -1,11 +1,11 @@
 package com.github.beetrox.hjalpigympabubblan2;
 
 import android.content.Intent;
+import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.design.widget.BottomNavigationView;
 import android.support.v7.app.ActionBar;
 import android.support.v7.app.AppCompatActivity;
-import android.os.Bundle;
 import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.util.Log;
@@ -21,7 +21,7 @@ import com.google.firebase.database.ValueEventListener;
 import java.util.ArrayList;
 import java.util.List;
 
-public class MainActivity extends AppCompatActivity {
+public class StrengthActivity extends AppCompatActivity {
 
     public List<Drill> drills = new ArrayList<>();
     private ActionBar toolbar;
@@ -32,17 +32,17 @@ public class MainActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_drills_grid);
+        setContentView(R.layout.activity_strength_grid);
 
 //        BottomNavigationMenuView navigationMenu = findViewById(R.id.navigation_view);
         toolbar = getSupportActionBar();
-        databaseReference = FirebaseDatabase.getInstance().getReference().child("drills").child("Skill");
+        databaseReference = FirebaseDatabase.getInstance().getReference().child("drills").child("Strength");
 
         BottomNavigationView navigation = (BottomNavigationView) findViewById(R.id.navigation_view);
         navigation.setOnNavigationItemSelectedListener(mOnNavigationItemSelectedListener);
 
         Menu menu = navigation.getMenu();
-        MenuItem menuItem = menu.getItem(0);
+        MenuItem menuItem = menu.getItem(1);
         menuItem.setChecked(true);
 
 //        CreateMockDrills();
@@ -90,13 +90,13 @@ public class MainActivity extends AppCompatActivity {
             switch (item.getItemId()) {
                 case R.id.menuDrills:
 //                    toolbar.setTitle("Drills");
-//                    intent = new Intent(getApplicationContext(), MainActivity.class);
-//                    startActivity(intent);
+                    intent = new Intent(getApplicationContext(), MainActivity.class);
+                    startActivity(intent);
                     return true;
                 case R.id.menuStrength:
 //                    toolbar.setTitle("Strength");
-                    intent = new Intent(getApplicationContext(), StrengthActivity.class);
-                    startActivity(intent);
+//                    intent = new Intent(getApplicationContext(), StrengthActivity.class);
+//                    startActivity(intent);
                     return true;
                 case R.id.menuDifficulty:
 //                    toolbar.setTitle("Difficulty");

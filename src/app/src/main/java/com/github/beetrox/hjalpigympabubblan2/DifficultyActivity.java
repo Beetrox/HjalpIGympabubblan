@@ -150,13 +150,14 @@ public class DifficultyActivity extends AppCompatActivity {
 
         @Override
         public boolean onNavigationItemSelected(@NonNull MenuItem item) {
-//            Fragment fragment;
             switch (item.getItemId()) {
                 case R.id.menuDrills:
                     intent = new Intent(getApplicationContext(), MainActivity.class);
                     startActivity(intent);
                     return true;
                 case R.id.menuStrength:
+                    intent = new Intent(getApplicationContext(), StrengthActivity.class);
+                    startActivity(intent);
                     return true;
                 case R.id.menuDifficulty:
 //                    intent = new Intent(getApplicationContext(), DifficultyActivity.class);

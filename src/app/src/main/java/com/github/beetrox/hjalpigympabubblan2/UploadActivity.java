@@ -149,7 +149,6 @@ public class UploadActivity extends AppCompatActivity {
             String tag = tags.get(i);
             tagReference.child(category).child(tag).child(id).setValue(true);
         }
-
         return;
     }
 
@@ -230,20 +229,22 @@ public class UploadActivity extends AppCompatActivity {
 
         @Override
         public boolean onNavigationItemSelected(@NonNull MenuItem item) {
-//            Fragment fragment;
             switch (item.getItemId()) {
                 case R.id.menuDrills:
                     intent = new Intent(getApplicationContext(), MainActivity.class);
                     startActivity(intent);
                     return true;
                 case R.id.menuStrength:
+                    intent = new Intent(getApplicationContext(), StrengthActivity.class);
+                    startActivity(intent);
                     return true;
                 case R.id.menuDifficulty:
                     intent = new Intent(getApplicationContext(), DifficultyActivity.class);
                     startActivity(intent);
                     return true;
                 case R.id.menuUpload:
-
+//                    intent = new Intent(getApplicationContext(), UploadActivity.class);
+//                    startActivity(intent);
                     return true;
             }
             return false;

@@ -11,4 +11,5 @@
     <string name="difficultyText">Difficulty value</string>
     <string name="resetSkills">Reset</string>
     <string name="pickSkill">Pick a skill</string>
+    <string name="search">Search</string>
 </resources>

@@ -18,6 +18,7 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
+        <activity android:name=".StrengthActivity" />
         <activity android:name=".DifficultyActivity" />
         <activity android:name=".DrillsActivity" />
         <activity android:name=".UploadActivity"></activity>
