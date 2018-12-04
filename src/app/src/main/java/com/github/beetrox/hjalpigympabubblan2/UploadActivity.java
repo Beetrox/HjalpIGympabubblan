@@ -9,7 +9,9 @@ import android.support.annotation.NonNull;
 import android.support.design.widget.BottomNavigationView;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.text.Editable;
 import android.text.TextUtils;
+import android.text.TextWatcher;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
@@ -58,6 +60,11 @@ public class UploadActivity extends AppCompatActivity {
     DatabaseReference drillReference;
     DatabaseReference tagReference;
 
+    boolean nameSelected = false;
+    boolean descriptionSelected = false;
+    boolean tagsSelected = false;
+    boolean imageSelected = false;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -78,6 +85,8 @@ public class UploadActivity extends AppCompatActivity {
 
         BottomNavigationView navigation = (BottomNavigationView) findViewById(R.id.navigation_view);
         navigation.setOnNavigationItemSelectedListener(mOnNavigationItemSelectedListener);
+
+        btnUpload.setEnabled(false);
 
         Menu menu = navigation.getMenu();
         MenuItem menuItem = menu.getItem(3);
@@ -105,6 +114,75 @@ public class UploadActivity extends AppCompatActivity {
                 UploadImage();
             }
         });
+
+        drillName.addTextChangedListener(new TextWatcher() {
+            @Override
+            public void beforeTextChanged(CharSequence charSequence, int i, int i1, int i2) {
+
+            }
+
+            @Override
+            public void onTextChanged(CharSequence charSequence, int i, int i1, int i2) {
+                if(charSequence.toString().trim().length()==0) {
+                    nameSelected = false;
+                    CheckEnableUpload();
+                } else {
+                    nameSelected = true;
+                    CheckEnableUpload();
+                }
+            }
+
+            @Override
+            public void afterTextChanged(Editable editable) {
+
+            }
+        });
+
+        drillDescription.addTextChangedListener(new TextWatcher() {
+            @Override
+            public void beforeTextChanged(CharSequence charSequence, int i, int i1, int i2) {
+
+            }
+
+            @Override
+            public void onTextChanged(CharSequence charSequence, int i, int i1, int i2) {
+                if(charSequence.toString().trim().length()==0) {
+                    descriptionSelected = false;
+                    CheckEnableUpload();
+                } else {
+                    descriptionSelected = true;
+                    CheckEnableUpload();
+                }
+            }
+
+            @Override
+            public void afterTextChanged(Editable editable) {
+
+            }
+        });
+
+        drillTags.addTextChangedListener(new TextWatcher() {
+            @Override
+            public void beforeTextChanged(CharSequence charSequence, int i, int i1, int i2) {
+
+            }
+
+            @Override
+            public void onTextChanged(CharSequence charSequence, int i, int i1, int i2) {
+                if(charSequence.toString().trim().length()==0) {
+                    tagsSelected = false;
+                    CheckEnableUpload();
+                } else {
+                    tagsSelected = true;
+                    CheckEnableUpload();
+                }
+            }
+
+            @Override
+            public void afterTextChanged(Editable editable) {
+
+            }
+        });
     }
 
     private void PopulateCategories() {
@@ -118,6 +196,7 @@ public class UploadActivity extends AppCompatActivity {
         intent.setType("image/*");
         intent.setAction(Intent.ACTION_GET_CONTENT);
         startActivityForResult(Intent.createChooser(intent, "Select Picture"), PICK_IMAGE_REQUEST);
+        //set imageSelected to true?
     }
 
     private void CreateDrill(String imageUri) {
@@ -129,18 +208,18 @@ public class UploadActivity extends AppCompatActivity {
             tags.set(i, tag);
         }
 
-        final Drill drill = new Drill(drillName.getText().toString(), imageUri, drillDescription.getText().toString(), tags, categorySpinner.getSelectedItem().toString());
-        final String id = UUID.randomUUID().toString();
+            final Drill drill = new Drill(drillName.getText().toString(), imageUri, drillDescription.getText().toString(), tags, categorySpinner.getSelectedItem().toString());
+            final String id = UUID.randomUUID().toString();
 
-        drillReference.child(drill.category).child(id).setValue(drill).addOnCompleteListener(new OnCompleteListener<Void>() {
-            @Override
-            public void onComplete(@NonNull Task<Void> task) {
-                CreateTags(drill.getCategory(), drill.getTags(), id);
-                // might destroy activity before CreateTags is completed
-                intent = new Intent(getApplicationContext(), MainActivity.class);
-                startActivity(intent);
-            }
-        });
+            drillReference.child(drill.category).child(id).setValue(drill).addOnCompleteListener(new OnCompleteListener<Void>() {
+                @Override
+                public void onComplete(@NonNull Task<Void> task) {
+                    CreateTags(drill.getCategory(), drill.getTags(), id);
+                    // might destroy activity before CreateTags is completed
+                    intent = new Intent(getApplicationContext(), MainActivity.class);
+                    startActivity(intent);
+                }
+            });
     }
 
     private void CreateTags(String category, List<String> tags, String id) {
@@ -203,6 +282,14 @@ public class UploadActivity extends AppCompatActivity {
                             progressDialog.setMessage("Uploaded "+(int)progress+"%");
                         }
                     });
+        }
+    }
+
+    public void CheckEnableUpload() {
+        if (nameSelected && descriptionSelected && tagsSelected) {
+            btnUpload.setEnabled(true);
+        } else {
+            btnUpload.setEnabled(false);
         }
     }
 
