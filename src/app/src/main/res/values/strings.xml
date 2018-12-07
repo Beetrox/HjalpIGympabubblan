@@ -12,4 +12,7 @@
     <string name="resetSkills">Reset</string>
     <string name="pickSkill">Pick a skill</string>
     <string name="search">Search</string>
+    <string name="describe_drill">Describe your drill</string>
+    <string name="tags">Tags</string>
+    <string name="upload_drill">Done</string>
 </resources>

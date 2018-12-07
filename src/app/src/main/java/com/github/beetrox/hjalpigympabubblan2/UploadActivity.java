@@ -15,6 +15,7 @@ import android.text.TextWatcher;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
+import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.EditText;
@@ -60,17 +61,18 @@ public class UploadActivity extends AppCompatActivity {
     DatabaseReference drillReference;
     DatabaseReference tagReference;
 
-    boolean nameSelected = false;
-    boolean descriptionSelected = false;
-    boolean tagsSelected = false;
-    boolean imageSelected = false;
+    boolean nameSelected;
+    boolean descriptionSelected;
+    boolean tagsSelected;
+    boolean categorySelected;
+    boolean imageSelected;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_upload);
 
-        btnSelect = (Button) findViewById(R.id.btnSelect);
+//        btnSelect = (Button) findViewById(R.id.btnSelect);
         btnUpload = (Button) findViewById(R.id.btnUpload);
         imageView = (ImageView) findViewById(R.id.imgViewUpload);
         drillName = findViewById(R.id.editTextName);
@@ -82,6 +84,12 @@ public class UploadActivity extends AppCompatActivity {
         firebaseDatabase = FirebaseDatabase.getInstance();
         drillReference = firebaseDatabase.getReference().child("drills");
         tagReference = firebaseDatabase.getReference().child("tags");
+
+        nameSelected = false;
+        descriptionSelected = false;
+        tagsSelected = false;
+        categorySelected = false;
+        imageSelected = false;
 
         BottomNavigationView navigation = (BottomNavigationView) findViewById(R.id.navigation_view);
         navigation.setOnNavigationItemSelectedListener(mOnNavigationItemSelectedListener);
@@ -101,17 +109,42 @@ public class UploadActivity extends AppCompatActivity {
         categoriesAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
         categorySpinner.setAdapter(categoriesAdapter);
 
-        btnSelect.setOnClickListener(new View.OnClickListener() {
+        imageView.setOnClickListener(new View.OnClickListener() {
             @Override
-            public void onClick(View v) {
+            public void onClick(View view) {
                 SelectImage();
             }
         });
 
+//        btnSelect.setOnClickListener(new View.OnClickListener() {
+//            @Override
+//            public void onClick(View v) {
+//                SelectImage();
+//            }
+//        });
+
         btnUpload.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                //also calling CreateDrill from inside UploadImage.
                 UploadImage();
+            }
+        });
+
+        categorySpinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+            @Override
+            public void onItemSelected(AdapterView<?> adapterView, View view, int i, long l) {
+                if (i>0) {
+                    categorySelected = true;
+                } else {
+                    categorySelected = false;
+                }
+                CheckEnableUpload();
+            }
+
+            @Override
+            public void onNothingSelected(AdapterView<?> adapterView) {
+
             }
         });
 
@@ -225,20 +258,9 @@ public class UploadActivity extends AppCompatActivity {
     private void CreateTags(String category, List<String> tags, String id) {
 
         for(int i=0;i<tags.size();i++) {
-            String tag = tags.get(i);
+            String tag = tags.get(i).toLowerCase();
             tagReference.child(category).child(tag).child(id).setValue(true);
         }
-        return;
-    }
-
-    public static String strJoin(String[] aArr, String sSep) {
-        StringBuilder sbStr = new StringBuilder();
-        for (int i = 0, il = aArr.length; i < il; i++) {
-            if (i > 0)
-                sbStr.append(sSep);
-            sbStr.append(aArr[i]);
-        }
-        return sbStr.toString();
     }
 
     private void UploadImage() {
@@ -248,7 +270,6 @@ public class UploadActivity extends AppCompatActivity {
             progressDialog.setTitle("Uploading...");
             progressDialog.show();
             final String fileName = UUID.randomUUID().toString();
-//            System.out.println(fileName);
 
             final StorageReference ref = storageReference.child("images/" + fileName);
             ref.putFile(filePath)
@@ -286,7 +307,7 @@ public class UploadActivity extends AppCompatActivity {
     }
 
     public void CheckEnableUpload() {
-        if (nameSelected && descriptionSelected && tagsSelected) {
+        if (nameSelected && descriptionSelected && tagsSelected && categorySelected) {
             btnUpload.setEnabled(true);
         } else {
             btnUpload.setEnabled(false);

@@ -11,17 +11,22 @@
         android:roundIcon="@mipmap/hig_icon"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
-        <activity android:name=".MainActivity">
+        <activity android:name=".MainActivity"
+            android:windowSoftInputMode="adjustPan">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity android:name=".StrengthActivity" />
-        <activity android:name=".DifficultyActivity" />
-        <activity android:name=".DrillsActivity" />
-        <activity android:name=".UploadActivity"></activity>
+        <activity android:name=".StrengthActivity"
+            android:windowSoftInputMode="adjustPan"/>
+        <activity android:name=".DifficultyActivity"
+            android:windowSoftInputMode="adjustPan"/>
+        <activity android:name=".DrillsActivity"
+            android:windowSoftInputMode="adjustPan"/>
+        <activity android:name=".UploadActivity"
+            android:windowSoftInputMode="adjustPan"/>
     </application>
 
 </manifest>

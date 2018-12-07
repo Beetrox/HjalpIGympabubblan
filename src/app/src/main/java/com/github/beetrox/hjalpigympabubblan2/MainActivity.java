@@ -32,6 +32,7 @@ public class MainActivity extends AppCompatActivity {
     public List<Drill> drills = new ArrayList<>();
     private ActionBar toolbar;
     Intent intent;
+    FirebaseDatabase firebaseDatabase;
     DatabaseReference databaseReference;
     RecyclerViewAdapter myAdapter;
     SearchView searchView;
@@ -43,7 +44,8 @@ public class MainActivity extends AppCompatActivity {
 
 //        BottomNavigationMenuView navigationMenu = findViewById(R.id.navigation_view);
         toolbar = getSupportActionBar();
-        databaseReference = FirebaseDatabase.getInstance().getReference().child("drills").child("Skill");
+        firebaseDatabase = FirebaseDatabase.getInstance();
+        databaseReference = firebaseDatabase.getReference().child("drills").child("Skill");
 
         BottomNavigationView navigation = (BottomNavigationView) findViewById(R.id.navigation_view);
         navigation.setOnNavigationItemSelectedListener(mOnNavigationItemSelectedListener);
@@ -93,22 +95,72 @@ public class MainActivity extends AppCompatActivity {
         MenuInflater menuInflater = getMenuInflater();
         menuInflater.inflate(R.menu.action_bar, menu);
 
-        MenuItem searchItem = menu.findItem(R.id.action_bar_search);
+        MenuItem search_item = menu.findItem(R.id.action_bar_search);
 
-        SearchManager searchManager = (SearchManager) MainActivity.this.getSystemService(Context.SEARCH_SERVICE);
+        final SearchView searchView = (SearchView) search_item.getActionView();
+        searchView.setFocusable(false);
+        searchView.setQueryHint("Search");
+        searchView.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
 
+            @Override
+            public boolean onQueryTextSubmit(String query) {
+                drills.clear();
+                firebaseDatabase.getReference().child("tags").child("Skill").child(query.toLowerCase()).addListenerForSingleValueEvent(new ValueEventListener() {
+                    @Override
+                    public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+                        final List<String> drillKeys = new ArrayList<>();
 
-        searchView = null;
-        if (searchItem != null) {
-            searchView = (SearchView) searchItem.getActionView();
-            System.out.println("first " + searchItem);
-        }
-        if (searchView != null) {
-            searchView.setSearchableInfo(searchManager.getSearchableInfo(MainActivity.this.getComponentName()));
-            System.out.println("second " + searchItem);
-        }
+                        for (DataSnapshot childSnapshot : dataSnapshot.getChildren()) {
+                            String key = childSnapshot.getKey();
+                            databaseReference.child(key).addListenerForSingleValueEvent(new ValueEventListener() {
+                                @Override
+                                public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+                                    Drill drill = dataSnapshot.getValue(Drill.class);
+                                    drills.add(drill);
+                                    myAdapter.notifyDataSetChanged();
+                                }
+
+                                @Override
+                                public void onCancelled(@NonNull DatabaseError databaseError) {
+
+                                }
+                            });
+                        }
+                    }
+
+                    @Override
+                    public void onCancelled(@NonNull DatabaseError databaseError) {
+
+                    }
+                });
+                return false;
+            }
+
+            @Override
+            public boolean onQueryTextChange(String newText) {
+                System.out.println("Change " + newText);
+                //show suggestions
+                return false;
+            }
+        });
+
         return super.onCreateOptionsMenu(menu);
     }
+//
+//        MenuItem searchItem = menu.findItem(R.id.action_bar_search);
+//
+//        SearchManager searchManager = (SearchManager) MainActivity.this.getSystemService(Context.SEARCH_SERVICE);
+//
+//        searchView = null;
+//        if (searchItem != null) {
+//            searchView = (SearchView) searchItem.getActionView();
+//            System.out.println("first " + searchItem);
+//        }
+//        if (searchView != null) {
+//            searchView.setSearchableInfo(searchManager.getSearchableInfo(MainActivity.this.getComponentName()));
+//            System.out.println("second " + searchItem);
+//        }
+
 
     private BottomNavigationView.OnNavigationItemSelectedListener mOnNavigationItemSelectedListener
             = new BottomNavigationView.OnNavigationItemSelectedListener() {
