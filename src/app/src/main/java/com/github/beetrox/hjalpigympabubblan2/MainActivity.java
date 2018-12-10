@@ -175,7 +175,7 @@ public class MainActivity extends AppCompatActivity {
                     startActivity(intent);
                     return true;
                 case R.id.menuUpload:
-                    intent = new Intent(getApplicationContext(), UploadActivity.class);
+                    intent = new Intent(getApplicationContext(), LoginActivity.class);
                     startActivity(intent);
                     return true;
             }
