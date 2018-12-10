@@ -126,7 +126,7 @@ public class UploadActivity extends AppCompatActivity {
         btnUpload.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                //also calling CreateDrill from inside UploadImage.
+                // Also calling CreateDrill from inside UploadImage.
                 UploadImage();
             }
         });
@@ -229,7 +229,7 @@ public class UploadActivity extends AppCompatActivity {
         intent.setType("image/*");
         intent.setAction(Intent.ACTION_GET_CONTENT);
         startActivityForResult(Intent.createChooser(intent, "Select Picture"), PICK_IMAGE_REQUEST);
-        //set imageSelected to true?
+        // Set imageSelected to true?
     }
 
     private void CreateDrill(String imageUri) {

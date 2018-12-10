@@ -111,22 +111,18 @@ public class StrengthActivity extends AppCompatActivity {
         public boolean onNavigationItemSelected(@NonNull MenuItem item) {
             switch (item.getItemId()) {
                 case R.id.menuDrills:
-//                    toolbar.setTitle("Drills");
                     intent = new Intent(getApplicationContext(), MainActivity.class);
                     startActivity(intent);
                     return true;
                 case R.id.menuStrength:
-//                    toolbar.setTitle("Strength");
 //                    intent = new Intent(getApplicationContext(), StrengthActivity.class);
 //                    startActivity(intent);
                     return true;
                 case R.id.menuDifficulty:
-//                    toolbar.setTitle("Difficulty");
                     intent = new Intent(getApplicationContext(), DifficultyActivity.class);
                     startActivity(intent);
                     return true;
                 case R.id.menuUpload:
-//                    toolbar.setTitle("Upload");
                     intent = new Intent(getApplicationContext(), UploadActivity.class);
                     startActivity(intent);
                     return true;
