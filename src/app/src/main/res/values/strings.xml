@@ -15,4 +15,5 @@
     <string name="describe_drill">Describe your drill</string>
     <string name="tags">Tags</string>
     <string name="upload_drill">Done</string>
+    <string name="login_greeting">Log in to upload and save your favourite drills!</string>
 </resources>

@@ -97,7 +97,6 @@ public class LoginActivity extends AppCompatActivity {
             intent = new Intent(getApplicationContext(), UserActivity.class);
             startActivity(intent);
         }
-
     }
 
     private void createAccount(String email, String password) {
@@ -117,7 +116,6 @@ public class LoginActivity extends AppCompatActivity {
                                     Toast.LENGTH_SHORT).show();
                             updateUI(null);
                         }
-
                         // ...
                     }
                 });
@@ -140,7 +138,6 @@ public class LoginActivity extends AppCompatActivity {
                                     Toast.LENGTH_SHORT).show();
                             updateUI(null);
                         }
-
                         // ...
                     }
                 });
@@ -172,5 +169,4 @@ public class LoginActivity extends AppCompatActivity {
             return false;
         }
     };
-
 }
