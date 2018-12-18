@@ -3,6 +3,8 @@ package com.github.beetrox.hjalpigympabubblan2;
 import java.util.List;
 
 public class Drill {
+
+    String userId;
     String name;
     String imageUrl;
     String description;
@@ -59,5 +61,13 @@ public class Drill {
 
     public void setCategory(String category) {
         this.category = category;
+    }
+
+    public String getUserId() {
+        return userId;
+    }
+
+    public void setUserId(String userId) {
+        this.userId = userId;
     }
 }

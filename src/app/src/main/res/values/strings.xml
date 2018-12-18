@@ -16,4 +16,8 @@
     <string name="tags">Tags</string>
     <string name="upload_drill">Done</string>
     <string name="login_greeting">Log in to upload and save your favourite drills!</string>
+    <string name="sign_out">Sign out</string>
+    <string name="user_favourites">Favourites</string>
+    <string name="user_my_drills">My drills</string>
+    <string name="user_upload">Upload</string>
 </resources>

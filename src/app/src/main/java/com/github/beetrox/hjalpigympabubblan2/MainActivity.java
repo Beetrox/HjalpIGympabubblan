@@ -42,7 +42,6 @@ public class MainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_drills_grid);
 
-//        BottomNavigationMenuView navigationMenu = findViewById(R.id.navigation_view);
         toolbar = getSupportActionBar();
         firebaseDatabase = FirebaseDatabase.getInstance();
         databaseReference = firebaseDatabase.getReference().child("drills").child("Skill");
