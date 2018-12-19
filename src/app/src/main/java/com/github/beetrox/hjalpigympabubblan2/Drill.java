@@ -15,7 +15,8 @@ public class Drill {
 
     }
 
-    public Drill(String name, String imageUrl, String description, List<String> tags, String category) {
+    public Drill(String userId, String name, String imageUrl, String description, List<String> tags, String category) {
+        this.userId = userId;
         this.name = name;
         this.imageUrl = imageUrl;
         this.description = description;

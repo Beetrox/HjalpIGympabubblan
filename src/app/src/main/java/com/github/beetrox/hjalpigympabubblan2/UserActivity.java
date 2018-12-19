@@ -48,14 +48,18 @@ public class UserActivity extends AppCompatActivity {
         favouritesButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                System.out.println("Favourites pressed");
+//                System.out.println("Favourites pressed");
+                intent = new Intent(getApplicationContext(), FavouritesActivity.class);
+                startActivity(intent);
             }
         });
 
         myDrillsButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                System.out.println("My drills pressed");
+//                System.out.println("My drills pressed");
+                intent = new Intent(getApplicationContext(), MyDrillsActivity.class);
+                startActivity(intent);
             }
         });
     }
