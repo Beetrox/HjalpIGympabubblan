@@ -1,6 +1,8 @@
 package com.github.beetrox.hjalpigympabubblan2;
 
 import android.content.Intent;
+import android.support.annotation.NonNull;
+import android.support.design.widget.BottomNavigationView;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.Menu;
@@ -15,6 +17,7 @@ public class UserActivity extends AppCompatActivity {
     Button uploadButton;
     Button favouritesButton;
     Button myDrillsButton;
+    BottomNavigationView navigation;
 
     Intent intent;
 
@@ -22,6 +25,13 @@ public class UserActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_user);
+
+        navigation = (BottomNavigationView) findViewById(R.id.navigation_view);
+        navigation.setOnNavigationItemSelectedListener(mOnNavigationItemSelectedListener);
+
+        Menu menu = navigation.getMenu();
+        MenuItem menuItem = menu.getItem(3);
+        menuItem.setChecked(true);
 
         uploadButton = findViewById(R.id.btnUpload);
         favouritesButton = findViewById(R.id.btnFavourites);
@@ -51,6 +61,14 @@ public class UserActivity extends AppCompatActivity {
     }
 
     @Override
+    protected void onResume() {
+        super.onResume();
+        Menu menu = navigation.getMenu();
+        MenuItem menuItem = menu.getItem(3);
+        menuItem.setChecked(true);
+    }
+
+    @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         // Inflate the menu; this adds items to the action bar if it is present.
         getMenuInflater().inflate(R.menu.user_menu, menu);
@@ -68,4 +86,31 @@ public class UserActivity extends AppCompatActivity {
 
         return true;
     }
+
+    private BottomNavigationView.OnNavigationItemSelectedListener mOnNavigationItemSelectedListener
+            = new BottomNavigationView.OnNavigationItemSelectedListener() {
+
+        @Override
+        public boolean onNavigationItemSelected(@NonNull MenuItem item) {
+            switch (item.getItemId()) {
+                case R.id.menuDrills:
+                    intent = new Intent(getApplicationContext(), MainActivity.class);
+                    startActivity(intent);
+                    return true;
+                case R.id.menuStrength:
+                    intent = new Intent(getApplicationContext(), StrengthActivity.class);
+                    startActivity(intent);
+                    return true;
+                case R.id.menuDifficulty:
+                    intent = new Intent(getApplicationContext(), DifficultyActivity.class);
+                    startActivity(intent);
+                    return true;
+                case R.id.menuUser:
+//                    intent = new Intent(getApplicationContext(), UploadActivity.class);
+//                    startActivity(intent);
+                    return true;
+            }
+            return false;
+        }
+    };
 }

@@ -8,7 +8,7 @@
 
     <LinearLayout
         android:id="@+id/layout_button2"
-        android:orientation="horizontal"
+        android:orientation="vertical"
         android:layout_alignParentTop="true"
         android:weightSum="3"
         android:layout_width="match_parent"
@@ -18,23 +18,100 @@
             android:id="@+id/btnFavourites"
             android:text="@string/user_favourites"
             android:layout_weight="1"
-            android:layout_width="0dp"
-            android:layout_height="wrap_content" />
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="10dp"
+            android:layout_marginEnd="10dp"
+            android:layout_marginTop="5dp"
+            android:layout_marginBottom="5dp"/>
 
         <Button
             android:id="@+id/btnMyDrills"
             android:text="@string/user_my_drills"
             android:layout_weight="1"
-            android:layout_width="0dp"
-            android:layout_height="wrap_content" />
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="10dp"
+            android:layout_marginEnd="10dp"
+            android:layout_marginTop="5dp"
+            android:layout_marginBottom="5dp"/>
 
         <Button
             android:id="@+id/btnUpload"
             android:text="@string/user_upload"
             android:layout_weight="1"
-            android:layout_width="0dp"
-            android:layout_height="wrap_content" />
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="10dp"
+            android:layout_marginEnd="10dp"
+            android:layout_marginTop="5dp"
+            android:layout_marginBottom="5dp"/>
+
 
     </LinearLayout>
+
+    <!--<GridLayout-->
+        <!--android:layout_width="match_parent"-->
+        <!--android:layout_height="match_parent"-->
+        <!--android:columnCount="2"-->
+        <!--android:rowCount="3">-->
+
+        <!--<ImageButton-->
+            <!--android:layout_height="wrap_content"-->
+            <!--app:srcCompat="@drawable/menu_burger"-->
+            <!--android:scaleType="centerCrop"-->
+            <!--android:layout_columnWeight="1"-->
+            <!--android:layout_rowWeight="1"-->
+            <!--android:layout_width="wrap_content"-->
+            <!--android:padding="1dp"-->
+            <!--android:elevation="0dp"-->
+            <!--android:layout_gravity="fill" />-->
+
+        <!--<ImageButton-->
+            <!--android:layout_width="wrap_content"-->
+            <!--android:layout_height="wrap_content"-->
+            <!--app:srcCompat="@drawable/menu_drills"-->
+            <!--android:layout_gravity="fill"-->
+            <!--android:layout_columnWeight="1"-->
+            <!--android:layout_rowWeight="1"/>-->
+
+        <!--<ImageButton-->
+            <!--android:layout_width="wrap_content"-->
+            <!--android:layout_height="wrap_content"-->
+            <!--app:srcCompat="@drawable/menu_upload"-->
+            <!--android:layout_gravity="fill"-->
+            <!--android:layout_columnWeight="1"-->
+            <!--android:layout_rowWeight="1"/>-->
+
+    <!--</GridLayout>-->
+
+    <!--<LinearLayout-->
+        <!--android:id="@+id/layout_button3"-->
+        <!--android:orientation="horizontal"-->
+        <!--android:layout_alignParentTop="true"-->
+        <!--android:weightSum="2"-->
+        <!--android:layout_width="match_parent"-->
+        <!--android:layout_height="wrap_content">-->
+
+        <!--<ImageButton-->
+            <!--android:id="@+id/imgbtn3"-->
+            <!--android:layout_weight="1"-->
+            <!--android:layout_width="wrap_content"-->
+            <!--android:layout_height="wrap_content"-->
+            <!--android:src="@drawable/menu_upload"/>-->
+
+    <!--</LinearLayout>-->
+
+    <android.support.design.widget.BottomNavigationView
+        android:id="@+id/navigation_view"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@color/colorPrimary"
+        app:itemIconTint="@drawable/nav_selected"
+        app:itemTextColor="@drawable/nav_selected"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintRight_toRightOf="parent"
+        app:menu="@menu/navigation_menu"/>
 
 </android.support.constraint.ConstraintLayout>

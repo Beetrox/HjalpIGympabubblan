@@ -1,11 +1,8 @@
 package com.github.beetrox.hjalpigympabubblan2;
 
-import android.app.SearchManager;
-import android.content.Context;
 import android.content.Intent;
 import android.support.annotation.NonNull;
 import android.support.design.widget.BottomNavigationView;
-import android.support.v4.view.MenuItemCompat;
 import android.support.v7.app.ActionBar;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
@@ -16,7 +13,6 @@ import android.util.Log;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
-import android.widget.Toast;
 
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
@@ -36,6 +32,7 @@ public class MainActivity extends AppCompatActivity {
     DatabaseReference databaseReference;
     RecyclerViewAdapter myAdapter;
     SearchView searchView;
+    BottomNavigationView navigation;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -46,19 +43,27 @@ public class MainActivity extends AppCompatActivity {
         firebaseDatabase = FirebaseDatabase.getInstance();
         databaseReference = firebaseDatabase.getReference().child("drills").child("Skill");
 
-        BottomNavigationView navigation = (BottomNavigationView) findViewById(R.id.navigation_view);
+        navigation = (BottomNavigationView) findViewById(R.id.navigation_view);
         navigation.setOnNavigationItemSelectedListener(mOnNavigationItemSelectedListener);
 
         Menu menu = navigation.getMenu();
         MenuItem menuItem = menu.getItem(0);
         menuItem.setChecked(true);
 
-        RecyclerView recyclerView = (RecyclerView) findViewById(R.id.recyclerview);
+        RecyclerView recyclerView = findViewById(R.id.recyclerview);
         myAdapter = new RecyclerViewAdapter(this, drills);
         recyclerView.setLayoutManager(new GridLayoutManager(this,3));
         recyclerView.setAdapter(myAdapter);
 
         setUpDataBase();
+    }
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+        Menu menu = navigation.getMenu();
+        MenuItem menuItem = menu.getItem(0);
+        menuItem.setChecked(true);
     }
 
     public void setUpDataBase() {
@@ -173,7 +178,7 @@ public class MainActivity extends AppCompatActivity {
                     intent = new Intent(getApplicationContext(), DifficultyActivity.class);
                     startActivity(intent);
                     return true;
-                case R.id.menuUpload:
+                case R.id.menuUser:
                     intent = new Intent(getApplicationContext(), LoginActivity.class);
                     startActivity(intent);
                     return true;

@@ -51,8 +51,8 @@ public class DrillsActivity extends AppCompatActivity {
 
         drillDescriptionTextView.setMovementMethod(new ScrollingMovementMethod());
 
-        BottomNavigationView navigation = (BottomNavigationView) findViewById(R.id.navigation_view);
-        navigation.setOnNavigationItemSelectedListener(mOnNavigationItemSelectedListener);
+//        BottomNavigationView navigation = (BottomNavigationView) findViewById(R.id.navigation_view);
+//        navigation.setOnNavigationItemSelectedListener(mOnNavigationItemSelectedListener);
 
 //        Menu menu = navigation.getMenu();
 //        for(int i=0; i<menu.size(); i++) {
@@ -61,30 +61,36 @@ public class DrillsActivity extends AppCompatActivity {
 //        }
     }
 
-    private BottomNavigationView.OnNavigationItemSelectedListener mOnNavigationItemSelectedListener
-            = new BottomNavigationView.OnNavigationItemSelectedListener() {
+    @Override
+    public boolean onSupportNavigateUp() {
+        onBackPressed();
+        return true;
+    }
 
-        @Override
-        public boolean onNavigationItemSelected(@NonNull MenuItem item) {
-            switch (item.getItemId()) {
-                case R.id.menuDrills:
-                    intent = new Intent(getApplicationContext(), MainActivity.class);
-                    startActivity(intent);
-                    return true;
-                case R.id.menuStrength:
-                    intent = new Intent(getApplicationContext(), StrengthActivity.class);
-                    startActivity(intent);
-                    return true;
-                case R.id.menuDifficulty:
-                    intent = new Intent(getApplicationContext(), DifficultyActivity.class);
-                    startActivity(intent);
-                    return true;
-                case R.id.menuUpload:
-                    intent = new Intent(getApplicationContext(), UploadActivity.class);
-                    startActivity(intent);
-                    return true;
-            }
-            return false;
-        }
-    };
+//    private BottomNavigationView.OnNavigationItemSelectedListener mOnNavigationItemSelectedListener
+//            = new BottomNavigationView.OnNavigationItemSelectedListener() {
+//
+//        @Override
+//        public boolean onNavigationItemSelected(@NonNull MenuItem item) {
+//            switch (item.getItemId()) {
+//                case R.id.menuDrills:
+//                    intent = new Intent(getApplicationContext(), MainActivity.class);
+//                    startActivity(intent);
+//                    return true;
+//                case R.id.menuStrength:
+//                    intent = new Intent(getApplicationContext(), StrengthActivity.class);
+//                    startActivity(intent);
+//                    return true;
+//                case R.id.menuDifficulty:
+//                    intent = new Intent(getApplicationContext(), DifficultyActivity.class);
+//                    startActivity(intent);
+//                    return true;
+//                case R.id.menuUpload:
+//                    intent = new Intent(getApplicationContext(), UploadActivity.class);
+//                    startActivity(intent);
+//                    return true;
+//            }
+//            return false;
+//        }
+//    };
 }

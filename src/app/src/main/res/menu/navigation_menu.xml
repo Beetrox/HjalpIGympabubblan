@@ -13,8 +13,8 @@
         android:id="@+id/menuDifficulty"
         android:icon="@drawable/menu_difficulty" />
 
-    <item android:title="@string/menu_upload"
-        android:id="@+id/menuUpload"
-        android:icon="@drawable/menu_upload" />
+    <item android:title="@string/profile"
+        android:id="@+id/menuUser"
+        android:icon="@drawable/menu_profile" />
 
 </menu>

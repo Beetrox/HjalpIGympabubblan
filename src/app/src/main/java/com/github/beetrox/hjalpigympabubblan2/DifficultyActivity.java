@@ -3,7 +3,6 @@ package com.github.beetrox.hjalpigympabubblan2;
 import android.content.Intent;
 import android.support.annotation.NonNull;
 import android.support.design.widget.BottomNavigationView;
-import android.support.v7.app.ActionBar;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.Menu;
@@ -27,6 +26,7 @@ public class DifficultyActivity extends AppCompatActivity {
     Spinner secondSkillSpinner;
     Spinner thirdSkillSpinner;
     Button resetButton;
+    BottomNavigationView navigation;
 
     List<Skill> skills = new ArrayList<>();
     List<String> skillNames = new ArrayList<>();
@@ -58,7 +58,7 @@ public class DifficultyActivity extends AppCompatActivity {
             }
         });
 
-        BottomNavigationView navigation = (BottomNavigationView) findViewById(R.id.navigation_view);
+        navigation = (BottomNavigationView) findViewById(R.id.navigation_view);
         navigation.setOnNavigationItemSelectedListener(mOnNavigationItemSelectedListener);
 
         Menu menu = navigation.getMenu();
@@ -132,6 +132,14 @@ public class DifficultyActivity extends AppCompatActivity {
         });
     }
 
+    @Override
+    protected void onResume() {
+        super.onResume();
+        Menu menu = navigation.getMenu();
+        MenuItem menuItem = menu.getItem(2);
+        menuItem.setChecked(true);
+    }
+
     public double DifficultyResult(int position) {
         double difficulty = 0;
         String skillName = skillNames.get(position);
@@ -163,8 +171,8 @@ public class DifficultyActivity extends AppCompatActivity {
 //                    intent = new Intent(getApplicationContext(), DifficultyActivity.class);
 //                    startActivity(intent);
                     return true;
-                case R.id.menuUpload:
-                    intent = new Intent(getApplicationContext(), UploadActivity.class);
+                case R.id.menuUser:
+                    intent = new Intent(getApplicationContext(), UserActivity.class);
                     startActivity(intent);
                     return true;
             }

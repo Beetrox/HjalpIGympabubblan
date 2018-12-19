@@ -32,6 +32,7 @@ public class StrengthActivity extends AppCompatActivity {
     Intent intent;
     DatabaseReference databaseReference;
     RecyclerViewAdapter myAdapter;
+    BottomNavigationView navigation;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -42,7 +43,7 @@ public class StrengthActivity extends AppCompatActivity {
         toolbar = getSupportActionBar();
         databaseReference = FirebaseDatabase.getInstance().getReference().child("drills").child("Strength");
 
-        BottomNavigationView navigation = (BottomNavigationView) findViewById(R.id.navigation_view);
+        navigation = (BottomNavigationView) findViewById(R.id.navigation_view);
         navigation.setOnNavigationItemSelectedListener(mOnNavigationItemSelectedListener);
 
         Menu menu = navigation.getMenu();
@@ -57,6 +58,14 @@ public class StrengthActivity extends AppCompatActivity {
         recyclerView.setAdapter(myAdapter);
 
         setUpDataBase();
+    }
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+        Menu menu = navigation.getMenu();
+        MenuItem menuItem = menu.getItem(1);
+        menuItem.setChecked(true);
     }
 
     public void setUpDataBase() {
@@ -122,8 +131,8 @@ public class StrengthActivity extends AppCompatActivity {
                     intent = new Intent(getApplicationContext(), DifficultyActivity.class);
                     startActivity(intent);
                     return true;
-                case R.id.menuUpload:
-                    intent = new Intent(getApplicationContext(), UploadActivity.class);
+                case R.id.menuUser:
+                    intent = new Intent(getApplicationContext(), UserActivity.class);
                     startActivity(intent);
                     return true;
             }

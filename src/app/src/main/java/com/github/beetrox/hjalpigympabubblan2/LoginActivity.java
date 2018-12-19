@@ -6,7 +6,6 @@ import android.support.annotation.NonNull;
 import android.support.design.widget.BottomNavigationView;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
@@ -161,7 +160,7 @@ public class LoginActivity extends AppCompatActivity {
                     intent = new Intent(getApplicationContext(), DifficultyActivity.class);
                     startActivity(intent);
                     return true;
-                case R.id.menuUpload:
+                case R.id.menuUser:
 //                    intent = new Intent(getApplicationContext(), UploadActivity.class);
 //                    startActivity(intent);
                     return true;
