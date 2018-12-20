@@ -246,7 +246,7 @@ public class UploadActivity extends AppCompatActivity {
     }
 
     private void CreateDrill(String imageUri) {
-        String tagString = drillTags.getText().toString();
+        String tagString = drillTags.getText().toString().toLowerCase();
         List<String> tags = Arrays.asList(TextUtils.split(tagString, ","));
 
         for(int i=0;i<tags.size();i++) {
