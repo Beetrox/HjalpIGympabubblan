@@ -8,6 +8,7 @@ import android.os.Bundle;
 import android.text.method.ScrollingMovementMethod;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.view.View;
 import android.widget.ImageView;
 import android.widget.TextView;
 
@@ -22,6 +23,7 @@ public class DrillsActivity extends AppCompatActivity {
     TextView drillNameTextView;
     TextView drillDescriptionTextView;
     ImageView drillImageView;
+    ImageView favouriteImageView;
 
     Intent intent;
 
@@ -48,6 +50,21 @@ public class DrillsActivity extends AppCompatActivity {
 
         drillImageView = findViewById(R.id.drillImageView);
         Glide.with(getApplicationContext()).load(imageUrl).into(drillImageView);
+
+        favouriteImageView = findViewById(R.id.favouriteStar);
+
+        favouriteImageView.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                // fill in and add to favourite list under user
+                if (favouriteImageView.getDrawable().getConstantState() == getResources().getDrawable(R.drawable.favourite_star_empty).getConstantState()) {
+                    favouriteImageView.setImageResource(R.drawable.favourite_star);
+                } else {
+                    favouriteImageView.setImageResource(R.drawable.favourite_star_empty);
+                }
+
+            }
+        });
 
         drillDescriptionTextView.setMovementMethod(new ScrollingMovementMethod());
 
