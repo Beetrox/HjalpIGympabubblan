@@ -254,15 +254,15 @@ public class UploadActivity extends AppCompatActivity {
             tags.set(i, tag);
         }
 
-            final Drill drill = new Drill(userId, drillName.getText().toString(), imageUri, drillDescription.getText().toString(), tags, categorySpinner.getSelectedItem().toString());
-            final String id = UUID.randomUUID().toString();
+            final String drillId = UUID.randomUUID().toString();
+            final Drill drill = new Drill(drillId, userId, drillName.getText().toString(), imageUri, drillDescription.getText().toString(), tags, categorySpinner.getSelectedItem().toString());
 
-            drillReference.child(drill.category).child(id).setValue(drill).addOnCompleteListener(new OnCompleteListener<Void>() {
+            drillReference.child(drill.category).child(drillId).setValue(drill).addOnCompleteListener(new OnCompleteListener<Void>() {
                 @Override
                 public void onComplete(@NonNull Task<Void> task) {
                     String category = drill.getCategory();
-                    CreateTags(category, drill.getTags(), id);
-                    CreateUserDrill(id, category);
+                    CreateTags(category, drill.getTags(), drillId);
+                    CreateUserDrill(drillId, category);
                     // might destroy activity before CreateTags is completed
                     intent = new Intent(getApplicationContext(), MainActivity.class);
                     startActivity(intent);
@@ -278,8 +278,8 @@ public class UploadActivity extends AppCompatActivity {
         }
     }
 
-    private void CreateUserDrill(String id, String category) {
-        firebaseDatabase.getReference().child("users").child(userId).child("myDrills").child(category).child(id).setValue(true);
+    private void CreateUserDrill(String drillId, String category) {
+        firebaseDatabase.getReference().child("users").child(userId).child("myDrills").child(category).child(drillId).setValue(true);
     }
 
     private void UploadImage() {

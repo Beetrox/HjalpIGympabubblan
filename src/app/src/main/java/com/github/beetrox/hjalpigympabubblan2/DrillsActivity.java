@@ -13,11 +13,20 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.bumptech.glide.Glide;
+import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.FirebaseUser;
+import com.google.firebase.database.FirebaseDatabase;
 
 public class DrillsActivity extends AppCompatActivity {
 
+    FirebaseDatabase firebaseDatabase;
+    FirebaseUser user;
+    String userId;
+
+    String drillId;
     String drillName;
     String drillDescription;
+    String drillCategory;
     String imageUrl;
 
     TextView drillNameTextView;
@@ -36,8 +45,10 @@ public class DrillsActivity extends AppCompatActivity {
         Bundle extras = getIntent().getExtras();
         if (extras != null) {
             //get the value based on the key
+            drillId = extras.getString("drillId");
             drillName = extras.getString("drillName");
             drillDescription = extras.getString("drillDescription");
+            drillCategory = extras.getString("drillCategory");
             imageUrl = extras.get("imageUrl").toString();
 //            Log.d(TAG, value);
         }
@@ -53,16 +64,22 @@ public class DrillsActivity extends AppCompatActivity {
 
         favouriteImageView = findViewById(R.id.favouriteStar);
 
+        firebaseDatabase = FirebaseDatabase.getInstance();
+
+        user = FirebaseAuth.getInstance().getCurrentUser();
+        userId = user.getUid();
+
         favouriteImageView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                // fill in and add to favourite list under user
+                // fill in and add to favourite list under user, add something to memorise which stars are filled in
                 if (favouriteImageView.getDrawable().getConstantState() == getResources().getDrawable(R.drawable.favourite_star_empty).getConstantState()) {
                     favouriteImageView.setImageResource(R.drawable.favourite_star);
+                    firebaseDatabase.getReference().child("users").child(userId).child("favourites").child(drillCategory).child(drillId).setValue(true);
                 } else {
                     favouriteImageView.setImageResource(R.drawable.favourite_star_empty);
+                    firebaseDatabase.getReference().child("users").child(userId).child("favourites").child(drillCategory).child(drillId).removeValue();
                 }
-
             }
         });
 

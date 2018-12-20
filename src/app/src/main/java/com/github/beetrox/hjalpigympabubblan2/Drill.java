@@ -4,6 +4,7 @@ import java.util.List;
 
 public class Drill {
 
+    String drillId;
     String userId;
     String name;
     String imageUrl;
@@ -15,7 +16,8 @@ public class Drill {
 
     }
 
-    public Drill(String userId, String name, String imageUrl, String description, List<String> tags, String category) {
+    public Drill(String drillId, String userId, String name, String imageUrl, String description, List<String> tags, String category) {
+        this.drillId = drillId;
         this.userId = userId;
         this.name = name;
         this.imageUrl = imageUrl;
@@ -70,5 +72,13 @@ public class Drill {
 
     public void setUserId(String userId) {
         this.userId = userId;
+    }
+
+    public String getDrillId() {
+        return drillId;
+    }
+
+    public void setDrillId(String drillId) {
+        this.drillId = drillId;
     }
 }
