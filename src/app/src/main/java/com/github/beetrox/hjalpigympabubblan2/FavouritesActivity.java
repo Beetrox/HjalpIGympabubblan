@@ -58,7 +58,6 @@ public class FavouritesActivity extends AppCompatActivity {
         firebaseDatabase.getReference().child("users").child(userId).child("favourites").addListenerForSingleValueEvent(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
-//                        final List<String> drillKeys = new ArrayList<>();
                 for (DataSnapshot childSnapshot : dataSnapshot.child("Skill").getChildren()) {
                     String key = childSnapshot.getKey();
                     databaseReference.child("Skill").child(key).addListenerForSingleValueEvent(new ValueEventListener() {
