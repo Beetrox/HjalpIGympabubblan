@@ -40,7 +40,9 @@ public class MyDrillsActivity extends AppCompatActivity {
         databaseReference = firebaseDatabase.getReference().child("drills");
 
         user = FirebaseAuth.getInstance().getCurrentUser();
-        userId = user.getUid();
+        if(user != null) {
+            userId = user.getUid();
+        }
 
         setUpDataBase();
     }
@@ -49,7 +51,9 @@ public class MyDrillsActivity extends AppCompatActivity {
     protected void onResume() {
         super.onResume();
         user = FirebaseAuth.getInstance().getCurrentUser();
-        userId = user.getUid();
+        if(user != null) {
+            userId = user.getUid();
+        }
     }
 
     private void setUpDataBase() {

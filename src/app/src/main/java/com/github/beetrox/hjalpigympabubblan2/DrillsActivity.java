@@ -11,6 +11,7 @@ import android.view.MenuItem;
 import android.view.View;
 import android.widget.ImageView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.bumptech.glide.Glide;
 import com.google.firebase.auth.FirebaseAuth;
@@ -71,18 +72,24 @@ public class DrillsActivity extends AppCompatActivity {
         firebaseDatabase = FirebaseDatabase.getInstance();
 
         user = FirebaseAuth.getInstance().getCurrentUser();
-        userId = user.getUid();
+        if(user != null) {
+            userId = user.getUid();
+        }
 
         favouriteImageView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 // fill in and add to favourite list under user, add something to memorise which stars are filled in
-                if (favouriteImageView.getDrawable().getConstantState() == getResources().getDrawable(R.drawable.favourite_star_empty).getConstantState()) {
-                    favouriteImageView.setImageResource(R.drawable.favourite_star);
-                    firebaseDatabase.getReference().child("users").child(userId).child("favourites").child(drillCategory).child(drillId).setValue(true);
+                if(user != null) {
+                    if (favouriteImageView.getDrawable().getConstantState() == getResources().getDrawable(R.drawable.favourite_star_empty).getConstantState()) {
+                        favouriteImageView.setImageResource(R.drawable.favourite_star);
+                        firebaseDatabase.getReference().child("users").child(userId).child("favourites").child(drillCategory).child(drillId).setValue(true);
+                    } else {
+                        favouriteImageView.setImageResource(R.drawable.favourite_star_empty);
+                        firebaseDatabase.getReference().child("users").child(userId).child("favourites").child(drillCategory).child(drillId).removeValue();
+                    }
                 } else {
-                    favouriteImageView.setImageResource(R.drawable.favourite_star_empty);
-                    firebaseDatabase.getReference().child("users").child(userId).child("favourites").child(drillCategory).child(drillId).removeValue();
+                    Toast.makeText(DrillsActivity.this, "Sign in to add favourite", Toast.LENGTH_SHORT).show();
                 }
             }
         });
@@ -102,24 +109,28 @@ public class DrillsActivity extends AppCompatActivity {
     @Override
     protected void onResume() {
         super.onResume();
-        DatabaseReference favouriteReference = firebaseDatabase.getReference().child("users").child(userId).child("favourites").child(drillCategory).child(drillId);
-        System.out.println(userId + " " + drillCategory + " " + drillId);
-        favouriteReference.addListenerForSingleValueEvent(new ValueEventListener() {
-            @Override
-            public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
-                if (dataSnapshot.exists()) {
-                    boolean value = (boolean) dataSnapshot.getValue();
-                    System.out.println(value);
-                    if (value) {
-                        favouriteImageView.setImageResource(R.drawable.favourite_star);
+        user = FirebaseAuth.getInstance().getCurrentUser();
+        if(user != null) {
+            userId = user.getUid();
+            DatabaseReference favouriteReference = firebaseDatabase.getReference().child("users").child(userId).child("favourites").child(drillCategory).child(drillId);
+//            System.out.println(userId + " " + drillCategory + " " + drillId);
+            favouriteReference.addListenerForSingleValueEvent(new ValueEventListener() {
+                @Override
+                public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+                    if (dataSnapshot.exists()) {
+                        boolean value = (boolean) dataSnapshot.getValue();
+                        System.out.println(value);
+                        if (value) {
+                            favouriteImageView.setImageResource(R.drawable.favourite_star);
+                        }
                     }
                 }
-            }
 
-            @Override
-            public void onCancelled(@NonNull DatabaseError databaseError) {
-            }
-        });
+                @Override
+                public void onCancelled(@NonNull DatabaseError databaseError) {
+                }
+            });
+        }
     }
 
     @Override

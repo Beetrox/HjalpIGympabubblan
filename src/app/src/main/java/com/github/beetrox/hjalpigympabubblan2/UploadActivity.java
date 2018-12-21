@@ -104,7 +104,9 @@ public class UploadActivity extends AppCompatActivity {
         btnUpload.setEnabled(false);
 
         FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();
-        userId = user.getUid();
+        if(user != null) {
+            userId = user.getUid();
+        }
 
         categories = new ArrayList<>();
         PopulateCategories();
