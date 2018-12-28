@@ -17,10 +17,13 @@ import android.view.MenuItem;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
+import android.widget.AutoCompleteTextView;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageView;
+import android.widget.ListView;
 import android.widget.Spinner;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.google.android.gms.tasks.OnCompleteListener;
@@ -48,11 +51,17 @@ public class UploadActivity extends AppCompatActivity {
     private ImageView imageView;
     private EditText drillName;
     private EditText drillDescription;
-    private EditText drillTags;
+//    private EditText drillTags;
+    private AutoCompleteTextView tagsTextView;
+    private ListView tagsListView;
     ArrayList<String> categories;
+    ArrayList<String> availableTags;
+    ArrayList<String> drillTags;
     Spinner categorySpinner;
     Intent intent;
     String userId;
+
+    ArrayAdapter<String> tagsListViewAdapter;
 
     private Uri filePath;
 
@@ -80,8 +89,11 @@ public class UploadActivity extends AppCompatActivity {
         imageView = (ImageView) findViewById(R.id.imgViewUpload);
         drillName = findViewById(R.id.editTextName);
         drillDescription = findViewById(R.id.editTextDescription);
-        drillTags = findViewById(R.id.editTextTags);
+//        drillTags = findViewById(R.id.editTextTags);
         categorySpinner = findViewById(R.id.categorySpinner);
+        tagsTextView = findViewById(R.id.tagsTextView);
+        tagsListView = findViewById(R.id.tagsListView);
+
         storage = FirebaseStorage.getInstance();
         storageReference = storage.getReference();
         firebaseDatabase = FirebaseDatabase.getInstance();
@@ -93,6 +105,12 @@ public class UploadActivity extends AppCompatActivity {
         tagsSelected = false;
         categorySelected = false;
         imageSelected = false;
+
+        drillTags = new ArrayList<>();
+
+        CreateTagsList();
+        SetTagsTextViewAdapter();
+        SetTagListViewAdapter();
 
 //        BottomNavigationView navigation = (BottomNavigationView) findViewById(R.id.navigation_view);
 //        navigation.setOnNavigationItemSelectedListener(mOnNavigationItemSelectedListener);
@@ -202,28 +220,118 @@ public class UploadActivity extends AppCompatActivity {
             }
         });
 
-        drillTags.addTextChangedListener(new TextWatcher() {
+        tagsTextView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
-            public void beforeTextChanged(CharSequence charSequence, int i, int i1, int i2) {
-
-            }
-
-            @Override
-            public void onTextChanged(CharSequence charSequence, int i, int i1, int i2) {
-                if(charSequence.toString().trim().length()==0) {
-                    tagsSelected = false;
-                    CheckEnableUpload();
-                } else {
-                    tagsSelected = true;
+            public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
+                String tag = adapterView.getItemAtPosition(i).toString();
+                tagsListViewAdapter.notifyDataSetChanged();
+                boolean tagExists = CheckDuplicate(tag);
+                if(!tagExists) {
+                    drillTags.add(tag);
                     CheckEnableUpload();
                 }
-            }
-
-            @Override
-            public void afterTextChanged(Editable editable) {
-
+                tagsTextView.setText("");
             }
         });
+
+        tagsListView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            @Override
+            public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
+                drillTags.remove(i);
+                CheckEnableUpload();
+                tagsListViewAdapter.notifyDataSetChanged();
+            }
+        });
+
+//        drillTags.addTextChangedListener(new TextWatcher() {
+//            @Override
+//            public void beforeTextChanged(CharSequence charSequence, int i, int i1, int i2) {
+//
+//            }
+//
+//            @Override
+//            public void onTextChanged(CharSequence charSequence, int i, int i1, int i2) {
+//                if(charSequence.toString().trim().length()==0) {
+//                    tagsSelected = false;
+//                    CheckEnableUpload();
+//                } else {
+//                    tagsSelected = true;
+//                    CheckEnableUpload();
+//                }
+//            }
+//
+//            @Override
+//            public void afterTextChanged(Editable editable) {
+//
+//            }
+//        });
+    }
+
+    private boolean CheckDuplicate(String tag) {
+        for(int i=0; i<drillTags.size(); i++) {
+            if(tag.equals(drillTags.get(i))) {
+                return true;
+            }
+        }
+        return false;
+    }
+
+    private void SetTagListViewAdapter() {
+        tagsListViewAdapter = new ArrayAdapter<>(this, android.R.layout.simple_list_item_1, drillTags);
+        tagsListViewAdapter.setNotifyOnChange(true);
+        tagsListView.setAdapter(tagsListViewAdapter);
+    }
+
+    private void SetTagsTextViewAdapter() {
+        ArrayAdapter<String> tagsTextViewAdapter = new ArrayAdapter<String>(this,
+                android.R.layout.simple_dropdown_item_1line, availableTags);
+        tagsTextViewAdapter.setNotifyOnChange(true);
+        tagsTextView.setAdapter(tagsTextViewAdapter);
+    }
+
+    private void CreateTagsList() {
+        availableTags = new ArrayList<>();
+        //tumbling
+        availableTags.add("rondat");
+        availableTags.add("flickis");
+        availableTags.add("whipback");
+        availableTags.add("handvolt");
+        availableTags.add("spagathandvolt");
+        availableTags.add("handvolt 2");
+        availableTags.add("salto");
+        availableTags.add("dubbelsalto");
+        availableTags.add("frivolt tumbling");
+        availableTags.add("voltstart");
+        availableTags.add("helstart");
+        availableTags.add("bakåtskruv");
+        availableTags.add("handstående");
+        availableTags.add("hjulning");
+        availableTags.add("framåtkullerbytta");
+        availableTags.add("bakåtkullerbytta");
+        //trampet
+        availableTags.add("frivolt trampett");
+        availableTags.add("tsukahara");
+        availableTags.add("dubbel frivolt");
+        availableTags.add("överslag");
+        availableTags.add("överslag skruv");
+        availableTags.add("överslag volt");
+        availableTags.add("petrik");
+        //both
+        availableTags.add("framåtskruv");
+        availableTags.add("inhopp");
+        //floor
+        availableTags.add("piruett");
+        availableTags.add("balans");
+        availableTags.add("hopp");
+        availableTags.add("piksitt");
+        availableTags.add("spetspik");
+        availableTags.add("hjulning flickis");
+        //other
+        availableTags.add("löpträning");
+        availableTags.add("stretch");
+        //strength
+        availableTags.add("parstyrka");
+        availableTags.add("styrka med redskap");
     }
 
     @Override
@@ -248,16 +356,16 @@ public class UploadActivity extends AppCompatActivity {
     }
 
     private void CreateDrill(String imageUri) {
-        String tagString = drillTags.getText().toString().toLowerCase();
-        List<String> tags = Arrays.asList(TextUtils.split(tagString, ","));
+//        String tagString = drillTags.getText().toString().toLowerCase();
+//        List<String> tags = Arrays.asList(TextUtils.split(tagString, ","));
 
-        for(int i=0;i<tags.size();i++) {
-            String tag = tags.get(i).trim();
-            tags.set(i, tag);
-        }
+//        for(int i=0;i<tags.size();i++) {
+//            String tag = tags.get(i).trim();
+//            tags.set(i, tag);
+//        }
 
             final String drillId = UUID.randomUUID().toString();
-            final Drill drill = new Drill(drillId, userId, drillName.getText().toString(), imageUri, drillDescription.getText().toString(), tags, categorySpinner.getSelectedItem().toString());
+            final Drill drill = new Drill(drillId, userId, drillName.getText().toString(), imageUri, drillDescription.getText().toString(), drillTags, categorySpinner.getSelectedItem().toString());
 
             drillReference.child(drill.category).child(drillId).setValue(drill).addOnCompleteListener(new OnCompleteListener<Void>() {
                 @Override
@@ -328,7 +436,7 @@ public class UploadActivity extends AppCompatActivity {
     }
 
     public void CheckEnableUpload() {
-        if (nameSelected && descriptionSelected && tagsSelected && categorySelected) {
+        if (nameSelected && descriptionSelected && drillTags.size()>0 && categorySelected) {
             btnUpload.setEnabled(true);
         } else {
             btnUpload.setEnabled(false);
