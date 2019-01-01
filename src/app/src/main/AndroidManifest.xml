@@ -41,7 +41,8 @@
         <activity android:name=".LoginActivity" />
         <activity android:name=".UserActivity" />
         <activity android:name=".MyDrillsActivity" />
-        <activity android:name=".FavouritesActivity"></activity>
+        <activity android:name=".FavouritesActivity" />
+        <activity android:name=".EditDrillActivity"></activity>
     </application>
 
 </manifest>

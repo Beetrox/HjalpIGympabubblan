@@ -30,6 +30,7 @@ public class StrengthActivity extends AppCompatActivity {
     public List<Drill> drills = new ArrayList<>();
     private ActionBar toolbar;
     Intent intent;
+    FirebaseDatabase firebaseDatabase;
     DatabaseReference databaseReference;
     RecyclerViewAdapter myAdapter;
     BottomNavigationView navigation;
@@ -38,10 +39,10 @@ public class StrengthActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_strength_grid);
-
 //        BottomNavigationMenuView navigationMenu = findViewById(R.id.navigation_view);
         toolbar = getSupportActionBar();
-        databaseReference = FirebaseDatabase.getInstance().getReference().child("drills").child("Strength");
+        firebaseDatabase = FirebaseDatabase.getInstance();
+        databaseReference = firebaseDatabase.getReference().child("drills").child("Strength");
 
         navigation = (BottomNavigationView) findViewById(R.id.navigation_view);
         navigation.setOnNavigationItemSelectedListener(mOnNavigationItemSelectedListener);
@@ -50,9 +51,7 @@ public class StrengthActivity extends AppCompatActivity {
         MenuItem menuItem = menu.getItem(1);
         menuItem.setChecked(true);
 
-//        CreateMockDrills();
-
-        RecyclerView recyclerView = (RecyclerView) findViewById(R.id.recyclerview);
+        RecyclerView recyclerView = findViewById(R.id.recyclerview);
         myAdapter = new RecyclerViewAdapter(this, drills);
         recyclerView.setLayoutManager(new GridLayoutManager(this,3));
         recyclerView.setAdapter(myAdapter);
@@ -95,21 +94,88 @@ public class StrengthActivity extends AppCompatActivity {
         });
     }
 
+//    public boolean onCreateOptionsMenu(Menu menu) {
+//        MenuInflater menuInflater = getMenuInflater();
+//        menuInflater.inflate(R.menu.action_bar, menu);
+//
+//        MenuItem searchItem = menu.findItem(R.id.action_bar_search);
+//
+//        SearchManager searchManager = (SearchManager) StrengthActivity.this.getSystemService(Context.SEARCH_SERVICE);
+//
+//        SearchView searchView = null;
+//        if (searchItem != null) {
+//            searchView = (SearchView) searchItem.getActionView();
+//        }
+//        if (searchView != null) {
+//            searchView.setSearchableInfo(searchManager.getSearchableInfo(StrengthActivity.this.getComponentName()));
+//        }
+//        return super.onCreateOptionsMenu(menu);
+//    }
+
     public boolean onCreateOptionsMenu(Menu menu) {
         MenuInflater menuInflater = getMenuInflater();
         menuInflater.inflate(R.menu.action_bar, menu);
 
         MenuItem searchItem = menu.findItem(R.id.action_bar_search);
 
-        SearchManager searchManager = (SearchManager) StrengthActivity.this.getSystemService(Context.SEARCH_SERVICE);
+        // Resetting to show all drills when SearchView back button is pressed, not perfect.
+        searchItem.setOnActionExpandListener(new MenuItem.OnActionExpandListener() {
+            @Override
+            public boolean onMenuItemActionExpand(MenuItem menuItem) {
+                return true;
+            }
 
-        SearchView searchView = null;
-        if (searchItem != null) {
-            searchView = (SearchView) searchItem.getActionView();
-        }
-        if (searchView != null) {
-            searchView.setSearchableInfo(searchManager.getSearchableInfo(StrengthActivity.this.getComponentName()));
-        }
+            @Override
+            public boolean onMenuItemActionCollapse(MenuItem menuItem) {
+                setUpDataBase();
+                return false;
+            }
+        });
+
+        final SearchView searchView = (SearchView) searchItem.getActionView();
+        searchView.setFocusable(false);
+        searchView.setQueryHint("Search");
+        searchView.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
+
+            @Override
+            public boolean onQueryTextSubmit(String query) {
+                drills.clear();
+                firebaseDatabase.getReference().child("tags").child("Strength").child(query.toLowerCase()).addListenerForSingleValueEvent(new ValueEventListener() {
+                    @Override
+                    public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+//                        final List<String> drillKeys = new ArrayList<>();
+                        for (DataSnapshot childSnapshot : dataSnapshot.getChildren()) {
+                            String key = childSnapshot.getKey();
+                            databaseReference.child(key).addListenerForSingleValueEvent(new ValueEventListener() {
+                                @Override
+                                public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+                                    Drill drill = dataSnapshot.getValue(Drill.class);
+                                    drills.add(drill);
+                                    myAdapter.notifyDataSetChanged();
+                                }
+
+                                @Override
+                                public void onCancelled(@NonNull DatabaseError databaseError) {
+
+                                }
+                            });
+                        }
+                    }
+
+                    @Override
+                    public void onCancelled(@NonNull DatabaseError databaseError) {
+
+                    }
+                });
+                return false;
+            }
+
+            @Override
+            public boolean onQueryTextChange(String newText) {
+                //show suggestions
+                return false;
+            }
+        });
         return super.onCreateOptionsMenu(menu);
     }
 
@@ -139,24 +205,4 @@ public class StrengthActivity extends AppCompatActivity {
             return false;
         }
     };
-
-    public void CreateMockDrills() {
-
-//        drills.add(new Drill("Flickisbacke", "Drills", "En backe att göra flickis i."));
-//        drills.add(new DifficultyDrill("Bam", "Drills", "Bra för att fokusera på inhoppet."));
-//        drills.add(new DifficultyDrill("Salto från plint", "Drills", "Extra fallhöjd."));
-//        drills.add(new DifficultyDrill("Salto i trampett", "Drills", "Våga ta stämmet."));
-//        drills.add(new DifficultyDrill("Handvoltstrappa", "Drills", "För att få lite extra fart."));
-//        drills.add(new DifficultyDrill("Piruett i rockring", "Drills", "Jobba på att få piruetten balanserad."));
-//        drills.add(new DifficultyDrill("Bakåtskruv till tjockmatta", "Drills", "Inbaning för bakåtskruv."));
-//        drills.add(new DifficultyDrill("Överslag till upphöjt", "Drills", "Hjälper till att få en bra andrabåge."));
-//        drills.add(new DifficultyDrill("Flickisbacke", "Drills", "En backe att göra flickis i."));
-//        drills.add(new DifficultyDrill("Bam", "Drills", "Bra för att fokusera på inhoppet."));
-//        drills.add(new DifficultyDrill("Salto från plint", "Drills", "Extra fallhöjd."));
-//        drills.add(new DifficultyDrill("Salto i trampett", "Drills", "Våga ta stämmet."));
-//        drills.add(new DifficultyDrill("Handvoltstrappa", "Drills", "För att få lite extra fart."));
-//        drills.add(new DifficultyDrill("Piruett i rockring", "Drills", "Jobba på att få piruetten balanserad."));
-//        drills.add(new DifficultyDrill("Bakåtskruv till tjockmatta", "Drills", "Inbaning för bakåtskruv."));
-//        drills.add(new DifficultyDrill("Överslag till upphöjt", "Drills", "Hjälper till att få en bra andrabåge."));
-    }
 }

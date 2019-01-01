@@ -134,6 +134,27 @@ public class DrillsActivity extends AppCompatActivity {
     }
 
     @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        // Inflate the menu; this adds items to the action bar if it is present.
+        getMenuInflater().inflate(R.menu.drill_menu, menu);
+
+        MenuItem signOut = menu.findItem(R.id.drillEdit);
+        signOut.setOnMenuItemClickListener(new MenuItem.OnMenuItemClickListener() {
+            @Override
+            public boolean onMenuItemClick(MenuItem menuItem) {
+                // send extras, which drill
+                intent = new Intent(getApplicationContext(), EditDrillActivity.class);
+                intent.putExtra("drillId", drillId);
+                intent.putExtra("drillCategory", drillCategory);
+                startActivity(intent);
+                return false;
+            }
+        });
+
+        return true;
+    }
+
+    @Override
     public boolean onSupportNavigateUp() {
         onBackPressed();
         return true;

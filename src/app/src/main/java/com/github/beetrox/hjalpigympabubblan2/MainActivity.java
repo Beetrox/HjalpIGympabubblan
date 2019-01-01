@@ -31,7 +31,6 @@ public class MainActivity extends AppCompatActivity {
     FirebaseDatabase firebaseDatabase;
     DatabaseReference databaseReference;
     RecyclerViewAdapter myAdapter;
-//    SearchView searchView;
     BottomNavigationView navigation;
 
     @Override
