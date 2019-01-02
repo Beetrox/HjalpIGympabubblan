@@ -43,7 +43,6 @@ public class FavouritesActivity extends AppCompatActivity {
         if(user != null) {
             userId = user.getUid();
         }
-
         setUpDataBase();
     }
 
@@ -59,33 +58,52 @@ public class FavouritesActivity extends AppCompatActivity {
     private void setUpDataBase() {
         myDrills.clear();
 
-        firebaseDatabase.getReference().child("users").child(userId).child("favourites").addListenerForSingleValueEvent(new ValueEventListener() {
+        System.out.println("setupdebe");
+        final DatabaseReference favouritesReference = firebaseDatabase.getReference().child("users").child(userId).child("favourites");
+        favouritesReference.addListenerForSingleValueEvent(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
                 for (DataSnapshot childSnapshot : dataSnapshot.child("Skill").getChildren()) {
-                    String key = childSnapshot.getKey();
+                    final String key = childSnapshot.getKey();
                     databaseReference.child("Skill").child(key).addListenerForSingleValueEvent(new ValueEventListener() {
                         @Override
                         public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+                            System.out.println("hejskill");
+
                             Drill drill = dataSnapshot.getValue(Drill.class);
-                            myDrills.add(drill);
-                            myAdapter.notifyDataSetChanged();
+                            System.out.println("hejskill2");
+                            System.out.println(drill);
+
+                            if (drill != null) {
+                                myDrills.add(drill);
+                                myAdapter.notifyDataSetChanged();
+                            } else{
+                                favouritesReference.child("Skill").child(key).removeValue();
+                            }
                         }
 
                         @Override
                         public void onCancelled(@NonNull DatabaseError databaseError) {
+                            System.out.println("fooskill");
 
+                            databaseReference.child("Skill").child(key).removeValue();
                         }
                     });
                 }
                 for (DataSnapshot childSnapshot : dataSnapshot.child("Strength").getChildren()) {
-                    String key = childSnapshot.getKey();
+                    final String key = childSnapshot.getKey();
                     databaseReference.child("Strength").child(key).addListenerForSingleValueEvent(new ValueEventListener() {
                         @Override
                         public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+                            System.out.println("hejstrength");
                             Drill drill = dataSnapshot.getValue(Drill.class);
-                            myDrills.add(drill);
-                            myAdapter.notifyDataSetChanged();
+
+                            if (drill != null) {
+                                myDrills.add(drill);
+                                myAdapter.notifyDataSetChanged();
+                            } else{
+                                favouritesReference.child("Strength").child(key).removeValue();
+                            }
                         }
 
                         @Override

@@ -58,6 +58,7 @@ public class RecyclerViewAdapter extends RecyclerView.Adapter<RecyclerViewAdapte
                 intent.putExtra("drillDescription", drill.getDescription());
                 intent.putExtra("drillCategory", drill.getCategory());
                 intent.putExtra("imageUrl", drill.getImageUrl());
+                intent.putExtra("drillUserId", drill.getUserId());
 //                intent.putExtra("Thumbnail",drills.get(position).getImage());
                 // start the activity
                 context.startActivity(intent);

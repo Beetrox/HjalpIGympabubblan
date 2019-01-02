@@ -5,4 +5,8 @@
         android:id="@+id/drillEdit"
         android:icon="@drawable/menu_burger" />
 
+    <item android:title="@string/delete"
+        android:id="@+id/drillDelete"
+        android:icon="@drawable/menu_burger" />
+
 </menu>

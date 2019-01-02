@@ -33,6 +33,7 @@ public class DrillsActivity extends AppCompatActivity {
     String drillDescription;
     String drillCategory;
     String imageUrl;
+    String drillUserId;
 
     TextView drillNameTextView;
     TextView drillDescriptionTextView;
@@ -55,6 +56,7 @@ public class DrillsActivity extends AppCompatActivity {
             drillDescription = extras.getString("drillDescription");
             drillCategory = extras.getString("drillCategory");
             imageUrl = extras.get("imageUrl").toString();
+            drillUserId = extras.get("drillUserId").toString();
 //            Log.d(TAG, value);
         }
 
@@ -135,17 +137,34 @@ public class DrillsActivity extends AppCompatActivity {
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
-        // Inflate the menu; this adds items to the action bar if it is present.
         getMenuInflater().inflate(R.menu.drill_menu, menu);
 
-        MenuItem signOut = menu.findItem(R.id.drillEdit);
-        signOut.setOnMenuItemClickListener(new MenuItem.OnMenuItemClickListener() {
+        MenuItem editDrill = menu.findItem(R.id.drillEdit);
+        MenuItem deleteDrill = menu.findItem(R.id.drillDelete);
+        editDrill.setVisible(false);
+        deleteDrill.setVisible(false);
+        if (userId != null && userId.equals(drillUserId)) {
+            editDrill.setVisible(true);
+            deleteDrill.setVisible(true);
+        }
+
+        editDrill.setOnMenuItemClickListener(new MenuItem.OnMenuItemClickListener() {
             @Override
             public boolean onMenuItemClick(MenuItem menuItem) {
                 // send extras, which drill
                 intent = new Intent(getApplicationContext(), EditDrillActivity.class);
                 intent.putExtra("drillId", drillId);
                 intent.putExtra("drillCategory", drillCategory);
+                startActivity(intent);
+                return false;
+            }
+        });
+
+        deleteDrill.setOnMenuItemClickListener(new MenuItem.OnMenuItemClickListener() {
+            @Override
+            public boolean onMenuItemClick(MenuItem menuItem) {
+                firebaseDatabase.getReference().child("drills").child(drillCategory).child(drillId).removeValue();
+                intent = new Intent(getApplicationContext(), MainActivity.class);
                 startActivity(intent);
                 return false;
             }

@@ -289,9 +289,10 @@ public class UploadActivity extends AppCompatActivity {
         tagsTextView.setAdapter(tagsTextViewAdapter);
     }
 
-    private void CreateTagsList() {
+    public void CreateTagsList() {
         availableTags = new ArrayList<>();
         //tumbling
+        availableTags.add("tumbling");
         availableTags.add("rondat");
         availableTags.add("flickis");
         availableTags.add("whipback");
@@ -309,6 +310,7 @@ public class UploadActivity extends AppCompatActivity {
         availableTags.add("framåtkullerbytta");
         availableTags.add("bakåtkullerbytta");
         //trampet
+        availableTags.add("trampett");
         availableTags.add("frivolt trampett");
         availableTags.add("tsukahara");
         availableTags.add("dubbel frivolt");
@@ -320,6 +322,7 @@ public class UploadActivity extends AppCompatActivity {
         availableTags.add("framåtskruv");
         availableTags.add("inhopp");
         //floor
+        availableTags.add("fristående");
         availableTags.add("piruett");
         availableTags.add("balans");
         availableTags.add("hopp");
@@ -381,7 +384,6 @@ public class UploadActivity extends AppCompatActivity {
     }
 
     private void CreateTags(String category, List<String> tags, String id) {
-
         for(int i=0;i<tags.size();i++) {
             String tag = tags.get(i).toLowerCase();
             tagReference.child(category).child(tag).child(id).setValue(true);
