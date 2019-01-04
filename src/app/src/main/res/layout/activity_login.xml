@@ -11,7 +11,7 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:text="@string/login_greeting"
-        android:textSize="30dp"
+        android:textSize="30sp"
         android:textAlignment="center"/>
 
     <RelativeLayout
@@ -33,7 +33,7 @@
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
-                android:hint="Email"
+                android:hint="@string/email"
                 android:inputType="textEmailAddress" />
 
             <EditText
@@ -41,7 +41,7 @@
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
-                android:hint="Password"
+                android:hint="@string/password"
                 android:inputType="textPassword" />
         </LinearLayout>
 
@@ -60,7 +60,7 @@
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
-                android:text="Sign in" />
+                android:text="@string/sign_in" />
 
             <Button
                 android:id="@+id/createAccountButton"
@@ -68,7 +68,7 @@
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
-                android:text="Create account" />
+                android:text="@string/create_account" />
         </LinearLayout>
 
     </RelativeLayout>

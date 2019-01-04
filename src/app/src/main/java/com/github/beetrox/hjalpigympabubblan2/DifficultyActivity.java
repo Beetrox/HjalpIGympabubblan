@@ -153,6 +153,17 @@ public class DifficultyActivity extends AppCompatActivity {
         return difficulty;
     }
 
+    @Override
+    public boolean onSupportNavigateUp() {
+        onBackPressed();
+        return true;
+    }
+
+    @Override
+    public void onBackPressed() {
+        // Do Here what ever you want do on back press;
+    }
+
     private BottomNavigationView.OnNavigationItemSelectedListener mOnNavigationItemSelectedListener
             = new BottomNavigationView.OnNavigationItemSelectedListener() {
 
@@ -172,7 +183,7 @@ public class DifficultyActivity extends AppCompatActivity {
 //                    startActivity(intent);
                     return true;
                 case R.id.menuUser:
-                    intent = new Intent(getApplicationContext(), UserActivity.class);
+                    intent = new Intent(getApplicationContext(), LoginActivity.class);
                     startActivity(intent);
                     return true;
             }

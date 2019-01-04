@@ -341,7 +341,9 @@ public class UploadActivity extends AppCompatActivity {
     protected void onResume() {
         super.onResume();
         FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();
-        userId = user.getUid();
+        if(user != null) {
+            userId = user.getUid();
+        }
     }
 
     private void PopulateCategories() {
