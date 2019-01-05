@@ -59,17 +59,23 @@ public class MyDrillsActivity extends AppCompatActivity {
     private void setUpDataBase() {
         myDrills.clear();
 
-        firebaseDatabase.getReference().child("users").child(userId).child("myDrills").addListenerForSingleValueEvent(new ValueEventListener() {
+        final DatabaseReference myDrillsDatabase = firebaseDatabase.getReference().child("users").child(userId).child("myDrills");
+        myDrillsDatabase.addListenerForSingleValueEvent(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
                 for (DataSnapshot childSnapshot : dataSnapshot.child("Skill").getChildren()) {
-                    String key = childSnapshot.getKey();
+                    final String key = childSnapshot.getKey();
                     databaseReference.child("Skill").child(key).addListenerForSingleValueEvent(new ValueEventListener() {
                         @Override
                         public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
                             Drill drill = dataSnapshot.getValue(Drill.class);
-                            myDrills.add(drill);
-                            myAdapter.notifyDataSetChanged();
+
+                            if (drill != null) {
+                                myDrills.add(drill);
+                                myAdapter.notifyDataSetChanged();
+                            } else {
+                                myDrillsDatabase.child("Skill").child(key).removeValue();
+                            }
                         }
 
                         @Override
@@ -79,18 +85,23 @@ public class MyDrillsActivity extends AppCompatActivity {
                     });
                 }
                 for (DataSnapshot childSnapshot : dataSnapshot.child("Strength").getChildren()) {
-                    String key = childSnapshot.getKey();
+                    final String key = childSnapshot.getKey();
                     databaseReference.child("Strength").child(key).addListenerForSingleValueEvent(new ValueEventListener() {
                         @Override
                         public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
                             Drill drill = dataSnapshot.getValue(Drill.class);
-                            myDrills.add(drill);
-                            myAdapter.notifyDataSetChanged();
+
+                            if (drill != null) {
+                                myDrills.add(drill);
+                                myAdapter.notifyDataSetChanged();
+                            } else{
+                                myDrillsDatabase.child("Strength").child(key).removeValue();
+                            }
                         }
 
                         @Override
                         public void onCancelled(@NonNull DatabaseError databaseError) {
-
+                            databaseReference.child("Skill").child(key).removeValue();
                         }
                     });
                 }

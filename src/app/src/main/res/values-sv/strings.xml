@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="app_name">Hjälp i Gympabubblan</string>
+    <string name="app_name_short">HiG</string>
+    <string name="menu_drills">Stationer</string>
+    <string name="menu_strength">Styrka</string>
+    <string name="menu_difficulty">Svårighet</string>
+    <string name="menu_upload">Ladda upp</string>
+    <string name="choose_skill">Välj övning</string>
+    <string name="difficultyText">Svårighetsvärde</string>
+    <string name="resetSkills">Återställ</string>
+    <string name="pickSkill">Välj en övning</string>
+    <string name="search">Sök</string>
+    <string name="describe_drill">Beskriv din station</string>
+    <string name="tags">Taggar</string>
+    <string name="upload_drill">Klar</string>
+    <string name="login_greeting">Logga in för att ladda upp och spara dina favoritstationer!</string>
+    <string name="sign_out">Logga ut</string>
+    <string name="user_favourites">Favoriter</string>
+    <string name="user_my_drills">Mina stationer</string>
+    <string name="user_upload">Ladda upp</string>
+    <string name="profile">Profil</string>
+    <string name="edit">Ändra</string>
+    <string name="delete">Ta bort</string>
+    <string name="create_account">Skapa konto</string>
+    <string name="sign_in">Logga in</string>
+    <string name="password">Lösenord</string>
+    <string name="email">E-post</string>
+    <string name="drill_name">Stationsnamn</string>
+    <string name="favourite_sign_in">Logga in för att lägga till favorit</string>
+</resources>

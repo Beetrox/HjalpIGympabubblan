@@ -1,12 +1,10 @@
 <resources>
     <string name="app_name">Hjälp i Gympabubblan</string>
     <string name="app_name_short">HiG</string>
-
     <string name="menu_drills">Drills</string>
     <string name="menu_strength">Strength</string>
     <string name="menu_difficulty">Difficulty</string>
     <string name="menu_upload">Upload</string>
-
     <string name="choose_skill">Choose skill</string>
     <string name="difficultyText">Difficulty value</string>
     <string name="resetSkills">Reset</string>
@@ -27,4 +25,6 @@
     <string name="sign_in">Sign in</string>
     <string name="password">Password</string>
     <string name="email">Email</string>
+    <string name="drill_name">Drill name</string>
+    <string name="favourite_sign_in">Sign in to add favourite</string>
 </resources>

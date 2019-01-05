@@ -58,7 +58,6 @@ public class FavouritesActivity extends AppCompatActivity {
     private void setUpDataBase() {
         myDrills.clear();
 
-        System.out.println("setupdebe");
         final DatabaseReference favouritesReference = firebaseDatabase.getReference().child("users").child(userId).child("favourites");
         favouritesReference.addListenerForSingleValueEvent(new ValueEventListener() {
             @Override
@@ -68,24 +67,19 @@ public class FavouritesActivity extends AppCompatActivity {
                     databaseReference.child("Skill").child(key).addListenerForSingleValueEvent(new ValueEventListener() {
                         @Override
                         public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
-                            System.out.println("hejskill");
 
                             Drill drill = dataSnapshot.getValue(Drill.class);
-                            System.out.println("hejskill2");
-                            System.out.println(drill);
 
                             if (drill != null) {
                                 myDrills.add(drill);
                                 myAdapter.notifyDataSetChanged();
-                            } else{
+                            } else {
                                 favouritesReference.child("Skill").child(key).removeValue();
                             }
                         }
 
                         @Override
                         public void onCancelled(@NonNull DatabaseError databaseError) {
-                            System.out.println("fooskill");
-
                             databaseReference.child("Skill").child(key).removeValue();
                         }
                     });
@@ -95,7 +89,6 @@ public class FavouritesActivity extends AppCompatActivity {
                     databaseReference.child("Strength").child(key).addListenerForSingleValueEvent(new ValueEventListener() {
                         @Override
                         public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
-                            System.out.println("hejstrength");
                             Drill drill = dataSnapshot.getValue(Drill.class);
 
                             if (drill != null) {

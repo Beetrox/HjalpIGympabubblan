@@ -120,18 +120,23 @@ public class MainActivity extends AppCompatActivity {
             @Override
             public boolean onQueryTextSubmit(String query) {
                 drills.clear();
-                firebaseDatabase.getReference().child("tags").child("Skill").child(query.toLowerCase()).addListenerForSingleValueEvent(new ValueEventListener() {
+                final DatabaseReference searchReference = firebaseDatabase.getReference().child("tags").child("Skill").child(query.toLowerCase());
+                searchReference.addListenerForSingleValueEvent(new ValueEventListener() {
                     @Override
                     public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
 //                        final List<String> drillKeys = new ArrayList<>();
                         for (DataSnapshot childSnapshot : dataSnapshot.getChildren()) {
-                            String key = childSnapshot.getKey();
+                            final String key = childSnapshot.getKey();
                             databaseReference.child(key).addListenerForSingleValueEvent(new ValueEventListener() {
                                 @Override
                                 public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
                                     Drill drill = dataSnapshot.getValue(Drill.class);
-                                    drills.add(drill);
-                                    myAdapter.notifyDataSetChanged();
+                                    if (drill != null) {
+                                        drills.add(drill);
+                                        myAdapter.notifyDataSetChanged();
+                                    } else {
+                                        searchReference.child(key).removeValue();
+                                    }
                                 }
 
                                 @Override

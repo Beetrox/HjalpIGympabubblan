@@ -91,7 +91,7 @@ public class DrillsActivity extends AppCompatActivity {
                         firebaseDatabase.getReference().child("users").child(userId).child("favourites").child(drillCategory).child(drillId).removeValue();
                     }
                 } else {
-                    Toast.makeText(DrillsActivity.this, "Sign in to add favourite", Toast.LENGTH_SHORT).show();
+                    Toast.makeText(DrillsActivity.this, getString(R.string.favourite_sign_in), Toast.LENGTH_SHORT).show();
                 }
             }
         });
@@ -178,31 +178,4 @@ public class DrillsActivity extends AppCompatActivity {
         onBackPressed();
         return true;
     }
-
-//    private BottomNavigationView.OnNavigationItemSelectedListener mOnNavigationItemSelectedListener
-//            = new BottomNavigationView.OnNavigationItemSelectedListener() {
-//
-//        @Override
-//        public boolean onNavigationItemSelected(@NonNull MenuItem item) {
-//            switch (item.getItemId()) {
-//                case R.id.menuDrills:
-//                    intent = new Intent(getApplicationContext(), MainActivity.class);
-//                    startActivity(intent);
-//                    return true;
-//                case R.id.menuStrength:
-//                    intent = new Intent(getApplicationContext(), StrengthActivity.class);
-//                    startActivity(intent);
-//                    return true;
-//                case R.id.menuDifficulty:
-//                    intent = new Intent(getApplicationContext(), DifficultyActivity.class);
-//                    startActivity(intent);
-//                    return true;
-//                case R.id.menuUpload:
-//                    intent = new Intent(getApplicationContext(), UploadActivity.class);
-//                    startActivity(intent);
-//                    return true;
-//            }
-//            return false;
-//        }
-//    };
 }
